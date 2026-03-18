@@ -1,1 +1,264 @@
-<p>home works!</p>
+<!-- Hero Section -->
+<section class="relative h-[calc(100vh-80px)] w-full overflow-hidden">
+  <div class="absolute inset-0 bg-primary/40 z-10"></div>
+  <div class="absolute inset-0 bg-cover bg-center"
+    style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuC9myZM0G0h0MKZVee3Cv9_m0Su-NtkhFK7dGP0vov_hKQ8TvQsLbcDKTg9xidpqUt41J9NsDGsOjpYrYNxtj91406eTFNg63tF1jYqGfpOIMzh_lHXWJ8MULS6AtzRBMArjDgMMy6ZqKRH5UIyGJp6L3TiT_gjoXJDqtpZqxhUAMFESJ30KIDnCXJeLIaLYdJEhZs-Pn6HuyyobBROehB1x9rC3LdWhKsfJ8E82VTt3pagUnO1RY2wudspsy5tWbn6wqeEpzT832s')">
+  </div>
+  <div class="relative z-20 h-full flex flex-col items-center justify-center text-center px-4">
+    <span class="text-accent uppercase tracking-[0.5em] font-medium mb-6">Tinh Hoa Nước Hoa Việt</span>
+    <h2 class="text-white text-5xl md:text-7xl lg:text-8xl font-black leading-tight mb-8 drop-shadow-2xl">
+      Nước Hoa Cao Cấp<br/>
+      <span class="italic font-light">Hương Thơm Vĩnh Cửu</span>
+    </h2>
+    <div class="flex flex-col sm:flex-row gap-6 mt-8">
+      <button class="bg-primary hover:bg-primary/90 text-white px-12 py-5 rounded-full font-bold uppercase tracking-widest transition-all transform hover:scale-105 shadow-xl">
+        Mua Lẻ
+      </button>
+      <button class="bg-white/10 hover:bg-white/20 backdrop-blur-md text-white border border-white/30 px-12 py-5 rounded-full font-bold uppercase tracking-widest transition-all transform hover:scale-105">
+        Đăng Ký Sỉ
+      </button>
+    </div>
+  </div>
+  <!-- Scroll Indicator -->
+  <div class="absolute bottom-10 left-1/2 -translate-x-1/2 z-20 text-white/50">
+    <span class="material-symbols-outlined animate-bounce">expand_more</span>
+  </div>
+</section>
+
+<!-- Scent Families -->
+<section class="py-20 bg-white dark:bg-background-dark/50">
+  <div class="max-w-7xl mx-auto px-4">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+      <div class="group flex flex-col items-center cursor-pointer">
+        <div class="w-20 h-20 rounded-full border border-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary group-hover:text-white transition-all duration-500">
+          <span class="material-symbols-outlined text-3xl">local_florist</span>
+        </div>
+        <span class="font-bold uppercase tracking-tighter text-sm">Hương Hoa</span>
+        <p class="text-xs text-slate-500 mt-1 uppercase">Floral</p>
+      </div>
+      <div class="group flex flex-col items-center cursor-pointer">
+        <div class="w-20 h-20 rounded-full border border-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary group-hover:text-white transition-all duration-500">
+          <span class="material-symbols-outlined text-3xl">forest</span>
+        </div>
+        <span class="font-bold uppercase tracking-tighter text-sm">Hương Gỗ</span>
+        <p class="text-xs text-slate-500 mt-1 uppercase">Woody</p>
+      </div>
+      <div class="group flex flex-col items-center cursor-pointer">
+        <div class="w-20 h-20 rounded-full border border-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary group-hover:text-white transition-all duration-500">
+          <span class="material-symbols-outlined text-3xl">nutrition</span>
+        </div>
+        <span class="font-bold uppercase tracking-tighter text-sm">Hương Cam Chanh</span>
+        <p class="text-xs text-slate-500 mt-1 uppercase">Citrus</p>
+      </div>
+      <div class="group flex flex-col items-center cursor-pointer">
+        <div class="w-20 h-20 rounded-full border border-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary group-hover:text-white transition-all duration-500">
+          <span class="material-symbols-outlined text-3xl">vaping_rooms</span>
+        </div>
+        <span class="font-bold uppercase tracking-tighter text-sm">Hương Phương Đông</span>
+        <p class="text-xs text-slate-500 mt-1 uppercase">Oriental</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Featured Collections -->
+<section class="py-24 overflow-hidden">
+  <div class="max-w-7xl mx-auto px-4 mb-16 flex justify-between items-end">
+    <div>
+      <h3 class="text-accent font-bold uppercase tracking-widest text-sm mb-4">Khám Phá</h3>
+      <h2 class="text-4xl md:text-5xl font-black text-primary dark:text-white leading-tight">Bộ Sưu Tập Đặc Biệt</h2>
+    </div>
+    <div class="flex gap-4 mb-2">
+      <button class="w-12 h-12 rounded-full border border-primary/20 flex items-center justify-center hover:bg-primary hover:text-white transition-colors">
+        <span class="material-symbols-outlined">chevron_left</span>
+      </button>
+      <button class="w-12 h-12 rounded-full border border-primary/20 flex items-center justify-center hover:bg-primary hover:text-white transition-colors">
+        <span class="material-symbols-outlined">chevron_right</span>
+      </button>
+    </div>
+  </div>
+  <div class="flex gap-8 px-4 overflow-x-auto snap-x no-scrollbar pb-10">
+    <!-- Card 1 -->
+    <div class="snap-center flex-none w-[300px] md:w-[450px]">
+      <div class="relative aspect-[3/4] rounded-xl overflow-hidden mb-6 group">
+        <img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+          src="https://lh3.googleusercontent.com/aida-public/AB6AXuDL14fiuJt210LBrq0xkxV6wFlMtDKmv7dnkUEvZJG1Zc9EMbfQeRT6JaKxF-rXRv6DRINeuRSyk01nyf5Ey3khvw7hUQnQKNGurt-ZVIEMhJ6jaVVCSrXhDJju-T_Dg788fVzPn7NTPXF1HgosWb9wOrSu0uHqbXY8v4sPdxo0JvIDGk1bmMr1LTBOtNU_Xm-1z8W5LZxfUYUwzgYqT8OcCCmpxKYs24dbZHujY1M8E8s5mLNXEtJZUJ2Iykgh6Cgn_ufxpB-XUfg"
+          alt="Heritage Collection"/>
+        <div class="absolute inset-0 bg-gradient-to-t from-primary/80 to-transparent flex flex-col justify-end p-8 text-white opacity-0 group-hover:opacity-100 transition-opacity">
+          <p class="text-sm font-medium mb-2 uppercase tracking-widest">Heritage Collection</p>
+          <h4 class="text-2xl font-bold">Hương Sen Tinh Khiết</h4>
+        </div>
+      </div>
+      <h4 class="text-xl font-bold text-primary dark:text-slate-100">Heritage Collection</h4>
+      <p class="text-primary/60 dark:text-slate-400">Gói trọn linh hồn Việt Nam</p>
+    </div>
+    <!-- Card 2 -->
+    <div class="snap-center flex-none w-[300px] md:w-[450px]">
+      <div class="relative aspect-[3/4] rounded-xl overflow-hidden mb-6 group">
+        <img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+          src="https://lh3.googleusercontent.com/aida-public/AB6AXuDChwV92BNZKeec7bKWJaSKoh7JX3pGwxfjQsVpl6jy30dMu-TTdWV1VkU4OTCx5w9FsZjiBDIXvx72g2mc42A4tb6R35Qkfhdzu9eiC6tSxdsd1_pPJLkmcaZ7bvmvNZbDRwjtv0UuPB_k14KT_f2qHtz6jlT9txsIaTr9NxeJwpH4KXRNSIWaJYiRBc8TTG6enqLsaBsiKtSJnigsO87aENsPgqSIudyBlmCL4ARC34G4w_5txGoq6XaUHbV9mQUXCS8YymO1HS0"
+          alt="Royal Signature"/>
+        <div class="absolute inset-0 bg-gradient-to-t from-primary/80 to-transparent flex flex-col justify-end p-8 text-white opacity-0 group-hover:opacity-100 transition-opacity">
+          <p class="text-sm font-medium mb-2 uppercase tracking-widest">Royal Signature</p>
+          <h4 class="text-2xl font-bold">Quyền Năng &amp; Sang Trọng</h4>
+        </div>
+      </div>
+      <h4 class="text-xl font-bold text-primary dark:text-slate-100">Royal Signature</h4>
+      <p class="text-primary/60 dark:text-slate-400">Sự sang trọng vĩnh cửu</p>
+    </div>
+    <!-- Card 3 -->
+    <div class="snap-center flex-none w-[300px] md:w-[450px]">
+      <div class="relative aspect-[3/4] rounded-xl overflow-hidden mb-6 group">
+        <img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+          src="https://lh3.googleusercontent.com/aida-public/AB6AXuDFgUxejAs5ioDx1a8vczlAaO6qw9LdusEP99y7wU051djrrbRynD5kMUe14rJPYeB_TMSmQVHoJldzpHpiuH5AnjAR4VJfFwPp3hKbt1ETxQqlpcV2_gtGKeEz1BMtLZjEVdnEtLwvM9SrzdOuP9D_KooPd4SVLUaVAVPuHZbFmxjDfi77PUzsphRi5iszyDaCUWKCFnQduYZnA6G8Y9-RVXwqUszAHOS6q9ICrWho9wA2zzsP-fb2S01_6yAzOaeNjee8m_dhe1Q"
+          alt="Winter Noir"/>
+        <div class="absolute inset-0 bg-gradient-to-t from-primary/80 to-transparent flex flex-col justify-end p-8 text-white opacity-0 group-hover:opacity-100 transition-opacity">
+          <p class="text-sm font-medium mb-2 uppercase tracking-widest">Winter Noir</p>
+          <h4 class="text-2xl font-bold">Bí Ẩn &amp; Quyến Rũ</h4>
+        </div>
+      </div>
+      <h4 class="text-xl font-bold text-primary dark:text-slate-100">Winter Noir</h4>
+      <p class="text-primary/60 dark:text-slate-400">Nốt hương đêm huyền bí</p>
+    </div>
+  </div>
+</section>
+
+<!-- Best Sellers -->
+<section class="py-24 bg-primary/5">
+  <div class="max-w-7xl mx-auto px-4 text-center mb-20">
+    <h3 class="text-accent font-bold uppercase tracking-widest text-sm mb-4">Sản Phẩm</h3>
+    <h2 class="text-4xl md:text-5xl font-black text-primary dark:text-white">Được Yêu Thích Nhất</h2>
+  </div>
+  <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-16">
+
+    <!-- Product 1 -->
+    <div class="group">
+      <div class="relative aspect-square rounded-xl overflow-hidden bg-white mb-6">
+        <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+          src="https://lh3.googleusercontent.com/aida-public/AB6AXuBiFu1XaVq-BfotVaGW61hyNQ4aKvHAd4brGaY1pLih3Krx27Lj2xt62BbZWE1G7sTlUWGb8CEHUDMxgeR0s7ONTYUPzfLt9Ac2CWIBKx7Ere0axsxyjT2imbEHyZM82kW91DdV4l3tc2KJWy7OA34r8-e0lCDbuKLPXPWWhQCJT27wuLhbY2Hz9UOFQ2gdCQIRqThRi9Gry0HgQQ0UeFUI4S94gocwkZioZjMBoZspBM0n8yq7wMd4wv9Tv4qeC7puRBZaSBKzpg0"
+          alt="Imperial Lotus Extrait"/>
+        <div class="absolute top-4 right-4">
+          <span class="bg-accent text-white px-3 py-1 text-[10px] font-bold uppercase tracking-widest rounded-full">New</span>
+        </div>
+        <div class="absolute inset-x-0 bottom-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform bg-white/80 backdrop-blur-sm">
+          <button class="w-full bg-primary text-white py-3 font-bold text-sm uppercase tracking-widest rounded-lg">Thêm Vào Giỏ</button>
+        </div>
+      </div>
+      <div class="flex flex-col items-center text-center">
+        <p class="text-xs text-primary/40 dark:text-slate-500 uppercase font-bold tracking-widest mb-1">LUXE SCENT</p>
+        <h4 class="text-lg font-bold mb-2">Imperial Lotus Extrait</h4>
+        <p class="text-accent font-bold">2.450.000₫</p>
+      </div>
+    </div>
+
+    <!-- Product 2 -->
+    <div class="group">
+      <div class="relative aspect-square rounded-xl overflow-hidden bg-white mb-6">
+        <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+          src="https://lh3.googleusercontent.com/aida-public/AB6AXuCx78UoM6F_1ofbVzdNu37jXobfvgm6uRfxolVROpRuBwfrfYAvmCUx3-KMYwulj9vklaNr24d4vkRb-AtjkdD_IufQf0SkQGdp4Ai-H6eE4CpGnlyF3PQ8pglJgYuHx_vf7ts5z5ghyRX4dAq994DrXlh9GLGZkyKJZ0FY8HYmfgE0tgEzY0GOIAbu29LDEnzYvnGjClO8a71ngnoAu4zaJj0bW9m5eSjtyobqSJUYOPwgx3wUtamGdGYuIT6tw-AIBVJ_VqGmYGk"
+          alt="Emerald Forest"/>
+        <div class="absolute inset-x-0 bottom-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform bg-white/80 backdrop-blur-sm">
+          <button class="w-full bg-primary text-white py-3 font-bold text-sm uppercase tracking-widest rounded-lg">Thêm Vào Giỏ</button>
+        </div>
+      </div>
+      <div class="flex flex-col items-center text-center">
+        <p class="text-xs text-primary/40 dark:text-slate-500 uppercase font-bold tracking-widest mb-1">SIGNATURE</p>
+        <h4 class="text-lg font-bold mb-2">Emerald Forest</h4>
+        <p class="text-accent font-bold">1.890.000₫</p>
+      </div>
+    </div>
+
+    <!-- Product 3 -->
+    <div class="group">
+      <div class="relative aspect-square rounded-xl overflow-hidden bg-white mb-6">
+        <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+          src="https://lh3.googleusercontent.com/aida-public/AB6AXuABPOa9hmKgrGelP-3FdRJzcvrwAGTIueXlgyvIuyLNSAjjK3bsYowf98eg7qh4DKsVm4GR-Y3_-qKrbU1cZF4gAYAhicqXbFFJE1nYKHTNJZljRlHyUd2LICANjTMzd-OW16FeLJdJEW0XaSh9spCTLFF8RNQIDrT0G1iwccDH9kTt8pCgFdeofkYNzHTMijAZd2aJdHGED1HPfcTgWDFiBLWM23psdooo8q8M-mXQlClmDZYyzeEkFV81LR_Ft8VK0MIWuejcK1M"
+          alt="Golden Amber Oud"/>
+        <div class="absolute inset-x-0 bottom-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform bg-white/80 backdrop-blur-sm">
+          <button class="w-full bg-primary text-white py-3 font-bold text-sm uppercase tracking-widest rounded-lg">Thêm Vào Giỏ</button>
+        </div>
+      </div>
+      <div class="flex flex-col items-center text-center">
+        <p class="text-xs text-primary/40 dark:text-slate-500 uppercase font-bold tracking-widest mb-1">LUXE SCENT</p>
+        <h4 class="text-lg font-bold mb-2">Golden Amber Oud</h4>
+        <p class="text-accent font-bold">3.200.000₫</p>
+      </div>
+    </div>
+
+    <!-- Product 4 -->
+    <div class="group">
+      <div class="relative aspect-square rounded-xl overflow-hidden bg-white mb-6">
+        <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+          src="https://lh3.googleusercontent.com/aida-public/AB6AXuAiRIw3DU1WfTkHGVloiznpaoXlJ2WetbArCTRIumatgmpsf1tGrzWf5cmt2ektEgKuJp02tpcYzS77617jWFtpUI-9u1W9jVt3N35wpGjiaKp1Bhif6WoJiU8Hp68cKbgEyBKqfuTYQJvYMgYmDyG1WHlCcUOpUWxZP1TfFxqvdzEV9Dj15njlfo-uZX5GZF7k9mkZC8MHDEZ1LJPwnmQPLqQwbGTjhsd_EtC0KyBKCJvePYtBgstmTXH4b5CsbzL1mXJgHqFCI48"
+          alt="Velvet Rose Musk"/>
+        <div class="absolute inset-x-0 bottom-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform bg-white/80 backdrop-blur-sm">
+          <button class="w-full bg-primary text-white py-3 font-bold text-sm uppercase tracking-widest rounded-lg">Thêm Vào Giỏ</button>
+        </div>
+      </div>
+      <div class="flex flex-col items-center text-center">
+        <p class="text-xs text-primary/40 dark:text-slate-500 uppercase font-bold tracking-widest mb-1">EXCLUSIVE</p>
+        <h4 class="text-lg font-bold mb-2">Velvet Rose Musk</h4>
+        <p class="text-accent font-bold">2.100.000₫</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- Instagram Feed -->
+<section class="py-24">
+  <div class="max-w-7xl mx-auto px-4 flex flex-col items-center mb-12">
+    <h2 class="text-2xl font-black text-primary dark:text-white uppercase tracking-[0.3em] mb-4">#LUXESCENT</h2>
+    <p class="text-primary/60 dark:text-slate-400">Chia sẻ khoảnh khắc sang trọng của bạn</p>
+  </div>
+  <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6">
+    <div class="aspect-square relative group overflow-hidden">
+      <img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+        src="https://lh3.googleusercontent.com/aida-public/AB6AXuDfzCdWFwWkGAFNba2ws4UavmCJF6q0XAUxiKk10uwPNyFMabGMKbD5wsmTKAhtpW4KYj6uPMK2PopqKOK3B7CaYu_7dVqPrM6rm5zDOWju3mbIj5Al4GKyokemNHK5-3S9UBpPiwCJvhMAE3JJ9-QsR1nSSbUdKOGIJmiSRRllKcDmv3xdGTMp8FxCf4Ew_e2eNA3rNZ1BZ56f45edxPImmJxcnGNMBHH1bSIXggISraAP1T4b4D2h9wTj5tvzyMfpKEX8nhmGLOs"
+        alt="Instagram 1"/>
+      <div class="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
+        <span class="material-symbols-outlined text-white text-3xl">photo_camera</span>
+      </div>
+    </div>
+    <div class="aspect-square relative group overflow-hidden">
+      <img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+        src="https://lh3.googleusercontent.com/aida-public/AB6AXuCrQXnC_Ru9HP-Vj1Jfrv2OJ-ICUB4ydh92lTRuZhfgDDTexu98nhqMDiJEn9vPpN6cfE9YUmvzGuxK_wOU2x3w3kwBsWuVgePqYR9-IKqi0VnzKqI5P4O7rYxFLv_N1uP6Qm4TqMiiUfdK87n_sWDRTECzoZTBZpJcn5yTN_IfDlt3BYtA8lL1qsN1l9cYgKuNQO8pquxqoCJnrWGBBeE-869REwNzHmVmuVnJPmyvCICpl3NtADSW2rmoPQMT1byur5jjhOuF8Hk"
+        alt="Instagram 2"/>
+      <div class="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
+        <span class="material-symbols-outlined text-white text-3xl">photo_camera</span>
+      </div>
+    </div>
+    <div class="aspect-square relative group overflow-hidden">
+      <img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+        src="https://lh3.googleusercontent.com/aida-public/AB6AXuC16jVlylRa-UtF8RoI8NHtbWk3f-V4rsq1fIA51mZDpQo7Ah7mDnw46JAPo8S-93Mb30i4zFKKaO0OB2ZQtYgKVZnyhH08ezmDvovl0Fp5h7z-KOQyy23pkFJvXLrGJ1teAgsjgMXtAg614m4bQq7SkWGfHYevudHv4zME0UqBGU12qaNPoioUL63yhvRhzO843cZ2fYhxtkWUW2rdEVoJkb10GjuhA2f4u8edLZCvlxTzWOQI26XyuSLsu_Ya10mJWmmaGv9ufDc"
+        alt="Instagram 3"/>
+      <div class="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
+        <span class="material-symbols-outlined text-white text-3xl">photo_camera</span>
+      </div>
+    </div>
+    <div class="aspect-square relative group overflow-hidden">
+      <img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+        src="https://lh3.googleusercontent.com/aida-public/AB6AXuBe7lM-QnRWZ8kLyfaFV2ts4fJIGZxfTDKHsry7_7OZ49lL2-D5woWaq4a09kImYSF9xqgLCdBrClb_i7VXWYxyXBhK2BMsTunYmI-OVC-UmzDYjEenFutuTIATWqYaVe373dead6HB8y8JugOte4Rl0wk1o-HTrsWYvBf5PDy4GC7GxLCXXNiIiqIZaf6W47OduE7rWmJORX2LtpAcl5fgmtcY4Hgg-SsDoTWg5AbKt3RIgm7SEzj6KFMCEqBiH3Kw5W8SRAWmkvQ"
+        alt="Instagram 4"/>
+      <div class="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
+        <span class="material-symbols-outlined text-white text-3xl">photo_camera</span>
+      </div>
+    </div>
+    <div class="aspect-square relative group overflow-hidden">
+      <img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+        src="https://lh3.googleusercontent.com/aida-public/AB6AXuBVQ2MvKjBN5bWmdDwdg9HTxmcF-fo4ikyCG5Yof-U4eQnaOLx7tVW3NirXTKEDZOElLowHHbE-Qf5T6d032ZTNNbjr0TBSbgL3cHjoPGF5rwj5xTxsk-nBkoyLrxjuevr5GaO0EBYqD3lO_9nRgFiwBWIMJ1GYfc__bQTdJIhqJZ96y879e1LLvSYzl48b85jCb1WdmKSlojLrksiRlg9qgRuSRzCZMtSjtWE9ot_RuGuZQQF2QD0ATBY66rpLOhCLaubOMAbNZVU"
+        alt="Instagram 5"/>
+      <div class="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
+        <span class="material-symbols-outlined text-white text-3xl">photo_camera</span>
+      </div>
+    </div>
+    <div class="aspect-square relative group overflow-hidden">
+      <img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+        src="https://lh3.googleusercontent.com/aida-public/AB6AXuCEAT91cdTEYgMXCcbTGWvkW_EitS4cHiS8B-XVN2MdI0ALfFJf5GeKjw-MzL6O2hA-g03AYN0XmanhIDQNFHID177kQjpT_v6STsmJsWV4RsujLZXSm9oVXoPlrdKV_L_-bJO6cXWPnQgOmH9yJ63XgBYSLSrpNjdCqZeOBKTSfw-PeRr7mFKFDgYfVwRstqbdz29pvRBVje1SZrSP3nt56WrTpPolszE-6Pd03gv7MQB6Lk0wMmUmXDgopdyo1aOpAt9-GxTAbAM"
+        alt="Instagram 6"/>
+      <div class="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
+        <span class="material-symbols-outlined text-white text-3xl">photo_camera</span>
+      </div>
+    </div>
+  </div>
+</section>

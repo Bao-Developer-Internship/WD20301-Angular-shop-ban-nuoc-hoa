@@ -1,1 +1,36 @@
-<p>header works!</p>
+<header class="sticky top-0 z-50 w-full bg-background-light/90 dark:bg-background-dark/90 backdrop-blur-md border-b border-primary/10">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between items-center h-20">
+
+      <!-- Logo -->
+      <div class="flex items-center gap-12">
+        <h1 class="text-2xl font-black tracking-tighter text-primary dark:text-slate-100">LUXE SCENT</h1>
+        <nav class="hidden lg:flex items-center gap-10">
+          <a class="text-sm font-semibold uppercase tracking-widest hover:text-accent transition-colors" href="#">Bộ Sưu Tập</a>
+          <a class="text-sm font-semibold uppercase tracking-widest hover:text-accent transition-colors" routerLink="/products">Bán Chạy</a>
+          <a class="text-sm font-semibold uppercase tracking-widest hover:text-accent transition-colors" href="#">Nhóm Hương</a>
+          <a class="text-sm font-semibold uppercase tracking-widest hover:text-accent transition-colors" routerLink="/about">Về Chúng Tôi</a>
+        </nav>
+      </div>
+
+      <!-- Actions -->
+      <div class="flex items-center gap-4">
+        <div class="hidden md:flex items-center bg-primary/5 rounded-full px-4 py-2 border border-primary/10">
+          <span class="material-symbols-outlined text-primary/60 text-xl">search</span>
+          <input class="bg-transparent border-none focus:ring-0 text-sm w-32 xl:w-48 placeholder:text-primary/40" placeholder="Tìm kiếm mùi hương..." type="text"/>
+        </div>
+        <button class="p-2 hover:bg-primary/5 rounded-full transition-colors">
+          <span class="material-symbols-outlined">favorite</span>
+        </button>
+        <button class="p-2 hover:bg-primary/5 rounded-full transition-colors relative">
+          <span class="material-symbols-outlined">shopping_bag</span>
+          <span class="absolute top-1 right-1 w-4 h-4 bg-accent text-[10px] text-white rounded-full flex items-center justify-center">2</span>
+        </button>
+        <button class="p-2 hover:bg-primary/5 rounded-full transition-colors lg:hidden">
+          <span class="material-symbols-outlined">menu</span>
+        </button>
+      </div>
+
+    </div>
+  </div>
+</header>
