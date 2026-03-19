@@ -3,12 +3,11 @@ import { ProductItem, Product } from '../product-item/product-item';
 import { ProductService } from '../product.service';
 
 @Component({
-  selector: 'app-products-list',
+  selector: 'app-best-sellers',
   imports: [ProductItem],
-  templateUrl: './products-list.html',
-  styleUrl: './products-list.css',
+  templateUrl: './best-sellers.html',
 })
-export class ProductsList {
+export class BestSellers {
   private productService = inject(ProductService);
-  products: Product[] = this.productService.getAll();
+  products: Product[] = this.productService.getBestSellers(4);
 }
