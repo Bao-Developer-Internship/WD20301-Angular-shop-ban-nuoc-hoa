@@ -1,0 +1,50 @@
+<main class="max-w-7xl mx-auto px-4 py-10">
+
+  <div class="flex flex-col md:flex-row justify-between items-end gap-6 mb-12">
+    <div>
+      <h1 class="text-5xl font-black text-primary leading-tight mb-3">Danh sách yêu thích</h1>
+      <p class="text-slate-400 text-lg">
+        @if (items.length === 0) { Danh sách yêu thích của bạn đang trống. }
+        @else { {{ items.length }} sản phẩm đang được lưu. }
+      </p>
+    </div>
+  </div>
+
+  @if (items.length === 0) {
+    <div class="text-center py-20 bg-primary/3 rounded-2xl">
+      <div class="text-7xl mb-6">💝</div>
+      <h3 class="text-2xl font-bold text-primary mb-3">Chưa có sản phẩm yêu thích</h3>
+      <p class="text-slate-400 mb-8">Khám phá và thêm những mùi hương tuyệt vời vào danh sách của bạn</p>
+      <a routerLink="/products" class="bg-primary text-white px-10 py-4 rounded-full font-bold uppercase tracking-widest inline-block hover:bg-primary/90 transition-colors">Khám phá ngay</a>
+    </div>
+  } @else {
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      @for (item of items; track item.id) {
+        <div class="group bg-white rounded-2xl p-4 border border-primary/5 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col gap-4">
+          <div class="relative aspect-[3/4] rounded-xl overflow-hidden">
+            <button (click)="remove(item.id)"
+              class="absolute top-3 right-3 z-10 w-9 h-9 rounded-full bg-white/90 text-red-400 flex items-center justify-center hover:bg-red-400 hover:text-white transition-all">✕</button>
+            <img [src]="item.img" [alt]="item.name"
+              class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"/>
+          </div>
+          <div class="flex-1">
+            <h3 class="font-bold text-primary text-lg">{{ item.name }}</h3>
+            <p class="text-xs text-slate-400 uppercase tracking-widest font-bold mb-2">{{ item.brand }}</p>
+            <p class="text-xl font-black text-primary">{{ item.price.toLocaleString() }}₫</p>
+          </div>
+          <button class="w-full bg-primary text-white py-3 rounded-xl font-bold text-sm uppercase tracking-widest flex items-center justify-center gap-2 hover:bg-primary/90 transition-colors">
+            🛒 Thêm vào giỏ
+          </button>
+        </div>
+      }
+    </div>
+  }
+
+  <div class="mt-20 text-center border-t border-primary/10 pt-12">
+    <p class="text-slate-400 mb-6">Bạn chưa tìm thấy mùi hương ưng ý khác?</p>
+    <a routerLink="/products" class="text-primary font-bold border-b-2 border-primary pb-1 hover:border-transparent transition-colors">
+      Tiếp tục khám phá cửa hàng →
+    </a>
+  </div>
+
+</main>

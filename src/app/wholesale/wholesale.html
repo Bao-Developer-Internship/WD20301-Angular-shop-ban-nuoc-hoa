@@ -1,0 +1,151 @@
+<!-- Hero -->
+<section class="relative py-24 overflow-hidden"
+  style="background: linear-gradient(135deg, rgba(10,61,42,0.95), rgba(10,61,42,0.85)), url('https://fimgs.net/mdimg/perfume/375x500.42575.jpg') center/cover">
+  <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+    <div>
+      <div class="inline-flex items-center gap-2 bg-accent/20 border border-accent/30 px-4 py-2 rounded-full mb-6">
+        <span class="w-2 h-2 rounded-full bg-accent animate-pulse"></span>
+        <span class="text-accent text-xs font-bold uppercase tracking-widest">Cơ hội hợp tác B2B</span>
+      </div>
+      <h1 class="text-white font-black text-5xl md:text-7xl leading-tight mb-6">
+        Nâng Tầm Kinh Doanh Với <span class="text-accent italic">Nước Hoa</span> Cao Cấp
+      </h1>
+      <p class="text-white/80 text-lg leading-relaxed mb-8 max-w-xl">
+        Cung cấp nguồn hàng nước hoa chính ngạch với chiết khấu lên đến 45%. Hỗ trợ đào tạo bán hàng, marketing và thiết kế cửa hàng cho đại lý.
+      </p>
+      <div class="flex flex-wrap gap-4">
+        <button class="bg-accent text-primary font-bold px-10 py-4 rounded-full uppercase tracking-widest hover:opacity-90 transition-opacity">Xem bảng giá sỉ 2024 📊</button>
+        <button class="bg-white text-primary font-bold px-10 py-4 rounded-full uppercase tracking-widest hover:bg-white/90 transition-colors">Đặt mẫu thử</button>
+      </div>
+    </div>
+    <div class="relative">
+      <div class="bg-white p-5 rounded-3xl shadow-2xl">
+        <img src="https://fimgs.net/mdimg/perfume/375x500.73669.jpg" class="w-full aspect-[4/5] object-cover rounded-2xl"/>
+        <div class="absolute -bottom-5 -left-5 bg-white p-6 rounded-2xl shadow-xl">
+          <p class="text-accent text-4xl font-black leading-none">45%</p>
+          <p class="text-primary text-xs font-bold uppercase tracking-wide">Chiết khấu tối đa</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Stats -->
+<section class="bg-primary py-16">
+  <div class="max-w-7xl mx-auto px-4 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+    @for (s of stats; track s.n) {
+      <div>
+        <p class="text-accent text-5xl font-black mb-2">{{ s.n }}</p>
+        <p class="text-white/60 text-xs font-bold uppercase tracking-widest">{{ s.label }}</p>
+      </div>
+    }
+  </div>
+</section>
+
+<!-- Pricing Tiers -->
+<section class="py-24 bg-slate-50">
+  <div class="max-w-7xl mx-auto px-4">
+    <div class="text-center mb-16">
+      <h2 class="text-4xl font-black text-primary uppercase mb-4">Bảng Giá Sỉ Theo Số Lượng</h2>
+      <p class="text-slate-500 max-w-2xl mx-auto">Lộ trình chiết khấu linh hoạt giúp tối ưu hóa lợi nhuận cho đối tác từ quy mô nhỏ đến lớn.</p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      @for (t of tiers; track t.title) {
+        <div class="rounded-2xl p-10 flex flex-col h-full relative transition-all hover:shadow-2xl"
+          [class]="t.featured ? 'bg-primary border-4 border-accent scale-105 shadow-2xl' : 'bg-white border border-slate-200'">
+          @if (t.featured) {
+            <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-accent text-primary text-xs font-black px-5 py-1.5 rounded-full uppercase tracking-widest">Phổ biến nhất</div>
+          }
+          <h3 class="text-lg font-black uppercase tracking-widest mb-4" [class]="t.featured ? 'text-accent' : 'text-primary'">{{ t.title }}</h3>
+          <div class="mb-6">
+            <span class="text-5xl font-black" [class]="t.featured ? 'text-white' : 'text-primary'">{{ t.discount }}</span>
+            <span class="ml-2" [class]="t.featured ? 'text-white/60' : 'text-slate-400'">Chiết khấu</span>
+          </div>
+          <ul class="space-y-3 flex-1 mb-8">
+            @for (item of t.items; track item) {
+              <li class="flex items-center gap-3 text-sm" [class]="t.featured ? 'text-white/90' : 'text-slate-600'">
+                <span class="text-accent text-lg">✓</span> {{ item }}
+              </li>
+            }
+          </ul>
+          <button class="w-full py-4 rounded-xl font-bold uppercase tracking-widest text-sm transition-all"
+            [class]="t.featured ? 'bg-accent text-primary hover:opacity-90' : 'border-2 border-primary text-primary hover:bg-primary hover:text-white'">
+            {{ t.featured ? 'Liên hệ hợp tác' : 'Chọn gói này' }}
+          </button>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- Contact Form -->
+<section class="py-24">
+  <div class="max-w-6xl mx-auto px-4">
+    <div class="grid grid-cols-1 lg:grid-cols-5 rounded-3xl overflow-hidden shadow-2xl">
+      <!-- Left -->
+      <div class="lg:col-span-2 bg-primary p-12 text-white">
+        <h2 class="text-3xl font-black mb-4">Yêu Cầu Tư Vấn & Báo Giá</h2>
+        <p class="text-white/70 leading-relaxed mb-10">Đội ngũ chuyên viên sẽ liên hệ trong vòng 2 giờ làm việc để tư vấn giải pháp kinh doanh tối ưu.</p>
+        <div class="space-y-6">
+          <div class="flex items-center gap-4">
+            <div class="w-12 h-12 rounded-xl bg-accent/20 flex items-center justify-center text-2xl">📞</div>
+            <div>
+              <p class="text-white/50 text-xs uppercase tracking-widest font-bold">Hotline B2B</p>
+              <p class="font-bold text-lg">1900 6789 (Nhánh 2)</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-4">
+            <div class="w-12 h-12 rounded-xl bg-accent/20 flex items-center justify-center text-2xl">📧</div>
+            <div>
+              <p class="text-white/50 text-xs uppercase tracking-widest font-bold">Email phân phối</p>
+              <p class="font-bold text-lg">wholesale&#64;luxescent.vn</p>
+            </div>
+          </div>
+        </div>
+        <div class="mt-10 p-6 bg-white/5 border border-white/10 rounded-2xl">
+          <p class="text-white/80 italic text-sm leading-relaxed mb-3">"Quyết định nhập sỉ tại LUXE SCENT là bước ngoặt cho cửa hàng của tôi. Doanh thu tăng 200% sau 3 tháng."</p>
+          <p class="text-accent text-xs font-bold uppercase tracking-wide">— Chị Lan Anh, Chủ chuỗi mỹ phẩm tại TP.HCM</p>
+        </div>
+      </div>
+      <!-- Right -->
+      <div class="lg:col-span-3 bg-white p-12">
+        <form (ngSubmit)="submit()" class="space-y-5">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+            <div>
+              <label class="block text-xs font-bold text-primary uppercase tracking-widest mb-2">Họ và tên *</label>
+              <input [(ngModel)]="formData.name" name="name" type="text" required placeholder="Nguyễn Văn A"
+                class="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm bg-slate-50 focus:outline-none focus:border-primary"/>
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-primary uppercase tracking-widest mb-2">Số điện thoại *</label>
+              <input [(ngModel)]="formData.phone" name="phone" type="tel" required placeholder="0901 234 xxx"
+                class="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm bg-slate-50 focus:outline-none focus:border-primary"/>
+            </div>
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-primary uppercase tracking-widest mb-2">Tên doanh nghiệp / cửa hàng</label>
+            <input [(ngModel)]="formData.business" name="business" type="text" placeholder="Luxe Beauty Store"
+              class="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm bg-slate-50 focus:outline-none focus:border-primary"/>
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-primary uppercase tracking-widest mb-2">Khu vực kinh doanh</label>
+            <select [(ngModel)]="formData.region" name="region"
+              class="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm bg-slate-50 focus:outline-none focus:border-primary">
+              <option>Miền Bắc</option>
+              <option>Miền Trung</option>
+              <option>Miền Nam</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-primary uppercase tracking-widest mb-2">Nội dung yêu cầu</label>
+            <textarea [(ngModel)]="formData.message" name="message" rows="4" placeholder="Tôi muốn nhận báo giá sỉ cho 100 sản phẩm..."
+              class="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm bg-slate-50 focus:outline-none focus:border-primary resize-none"></textarea>
+          </div>
+          <button type="submit" class="w-full bg-primary text-white py-4 rounded-xl font-bold uppercase tracking-widest hover:bg-primary/90 transition-colors">
+            Gửi yêu cầu báo giá
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
