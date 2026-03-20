@@ -46,6 +46,6 @@ export class ProductDetail {
     { qty: '300+ chai', price: 'Liên hệ trực tiếp', discount: 'VIP' },
   ];
 
-  stars(n: number) { return Array(n).fill('★'); }
-  emptyStars(n: number) { return Array(5 - n).fill('☆'); }
+  stars(n: number) { return Array(Math.floor(n)).fill('★'); }
+  emptyStars(n: number) { return Array(5 - Math.floor(n)).fill('☆'); }
 }

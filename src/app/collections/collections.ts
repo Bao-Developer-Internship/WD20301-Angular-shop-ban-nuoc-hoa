@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
 
 export interface Season {
   id: string;
@@ -13,7 +12,7 @@ export interface Season {
 
 @Component({
   selector: 'app-collections',
-  imports: [RouterLink],
+  imports: [],
   templateUrl: './collections.html',
 })
 export class Collections {
