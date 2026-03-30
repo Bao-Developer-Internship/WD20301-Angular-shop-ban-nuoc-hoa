@@ -8,7 +8,9 @@
         <span class="mx-2">/</span>
         <span class="text-primary">Cửa hàng</span>
       </nav>
-      <h2 class="text-5xl font-black text-primary leading-tight mb-4">Khám Phá Hương Thơm Đẳng Cấp</h2>
+      <h2 class="text-5xl font-black text-primary leading-tight mb-4">
+        @if (searchQuery()) { Kết quả: "{{ searchQuery() }}" } @else { Khám Phá Hương Thơm Đẳng Cấp }
+      </h2>
       <div class="h-px w-32 mb-4" style="background: linear-gradient(to right, transparent, #c5a059, transparent)"></div>
       <p class="text-slate-600 leading-relaxed italic">Tinh hoa từ những nhà làm hương danh tiếng nhất thế giới, được tuyển chọn dành riêng cho phong cách thượng lưu của bạn.</p>
     </div>
@@ -108,8 +110,24 @@
     <!-- Product Grid -->
     <div class="flex-1">
       <div class="flex justify-between items-center mb-8 pb-4 border-b border-primary/5">
-        <p class="text-sm text-slate-500 font-medium">Hiển thị <span class="text-primary font-bold">48</span> sản phẩm</p>
-        <div class="flex items-center gap-4">
+        <p class="text-sm text-slate-500 font-medium">
+          Hiển thị <span class="text-primary font-bold">{{ filtered().length }}</span> sản phẩm
+          @if (searchQuery()) { cho "<span class="text-accent font-bold">{{ searchQuery() }}</span>" }
+        </p>
+        <div class="flex items-center gap-3">
+          <!-- Search inline -->
+          <div class="flex items-center bg-primary/5 rounded-full px-3 py-2 border border-primary/10 focus-within:border-primary/30 transition-colors">
+            <span class="material-symbols-outlined text-primary/50 text-base">search</span>
+            <input
+              [value]="searchQuery()"
+              (input)="onSearch($any($event.target).value)"
+              type="text"
+              placeholder="Lọc theo tên..."
+              class="bg-transparent border-none focus:ring-0 text-sm w-36 placeholder:text-primary/40 outline-none ml-1"/>
+            @if (searchQuery()) {
+              <button (click)="onSearch('')" class="text-slate-400 hover:text-primary ml-1 text-xs">✕</button>
+            }
+          </div>
           <span class="text-sm text-slate-400">Sắp xếp:</span>
           <select class="bg-transparent border-none text-sm font-bold text-primary focus:ring-0 cursor-pointer">
             <option>Mới nhất</option>
@@ -121,8 +139,16 @@
       </div>
 
       <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-x-8 gap-y-12">
-        @for (product of products; track product.name) {
+        @for (product of filtered(); track product.id) {
           <app-product-item [product]="product" variant="portrait" />
+        }
+        @if (filtered().length === 0) {
+          <div class="col-span-3 text-center py-20">
+            <p class="text-4xl mb-4">🔍</p>
+            <p class="text-xl font-bold text-primary mb-2">Không tìm thấy sản phẩm</p>
+            <p class="text-slate-400">Thử tìm với từ khóa khác</p>
+            <button (click)="onSearch('')" class="mt-4 text-accent font-bold underline text-sm">Xem tất cả sản phẩm</button>
+          </div>
         }
       </div>
 

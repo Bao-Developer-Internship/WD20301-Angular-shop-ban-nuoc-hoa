@@ -74,53 +74,14 @@
     <p class="text-primary/60 dark:text-slate-400">Chia sẻ khoảnh khắc sang trọng của bạn</p>
   </div>
   <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6">
-    <div class="aspect-square relative group overflow-hidden">
-      <img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-        src="https://lh3.googleusercontent.com/aida-public/AB6AXuDfzCdWFwWkGAFNba2ws4UavmCJF6q0XAUxiKk10uwPNyFMabGMKbD5wsmTKAhtpW4KYj6uPMK2PopqKOK3B7CaYu_7dVqPrM6rm5zDOWju3mbIj5Al4GKyokemNHK5-3S9UBpPiwCJvhMAE3JJ9-QsR1nSSbUdKOGIJmiSRRllKcDmv3xdGTMp8FxCf4Ew_e2eNA3rNZ1BZ56f45edxPImmJxcnGNMBHH1bSIXggISraAP1T4b4D2h9wTj5tvzyMfpKEX8nhmGLOs"
-        alt="Instagram 1"/>
-      <div class="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
-        <span class="material-symbols-outlined text-white text-3xl">photo_camera</span>
+    @for (img of gallery.images(); track $index) {
+      <div class="aspect-square relative group overflow-hidden">
+        <img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+          [src]="img" [alt]="'Gallery ' + ($index + 1)"/>
+        <div class="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
+          <span class="material-symbols-outlined text-white text-3xl">photo_camera</span>
+        </div>
       </div>
-    </div>
-    <div class="aspect-square relative group overflow-hidden">
-      <img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-        src="https://lh3.googleusercontent.com/aida-public/AB6AXuCrQXnC_Ru9HP-Vj1Jfrv2OJ-ICUB4ydh92lTRuZhfgDDTexu98nhqMDiJEn9vPpN6cfE9YUmvzGuxK_wOU2x3w3kwBsWuVgePqYR9-IKqi0VnzKqI5P4O7rYxFLv_N1uP6Qm4TqMiiUfdK87n_sWDRTECzoZTBZpJcn5yTN_IfDlt3BYtA8lL1qsN1l9cYgKuNQO8pquxqoCJnrWGBBeE-869REwNzHmVmuVnJPmyvCICpl3NtADSW2rmoPQMT1byur5jjhOuF8Hk"
-        alt="Instagram 2"/>
-      <div class="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
-        <span class="material-symbols-outlined text-white text-3xl">photo_camera</span>
-      </div>
-    </div>
-    <div class="aspect-square relative group overflow-hidden">
-      <img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-        src="https://lh3.googleusercontent.com/aida-public/AB6AXuC16jVlylRa-UtF8RoI8NHtbWk3f-V4rsq1fIA51mZDpQo7Ah7mDnw46JAPo8S-93Mb30i4zFKKaO0OB2ZQtYgKVZnyhH08ezmDvovl0Fp5h7z-KOQyy23pkFJvXLrGJ1teAgsjgMXtAg614m4bQq7SkWGfHYevudHv4zME0UqBGU12qaNPoioUL63yhvRhzO843cZ2fYhxtkWUW2rdEVoJkb10GjuhA2f4u8edLZCvlxTzWOQI26XyuSLsu_Ya10mJWmmaGv9ufDc"
-        alt="Instagram 3"/>
-      <div class="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
-        <span class="material-symbols-outlined text-white text-3xl">photo_camera</span>
-      </div>
-    </div>
-    <div class="aspect-square relative group overflow-hidden">
-      <img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-        src="https://lh3.googleusercontent.com/aida-public/AB6AXuBe7lM-QnRWZ8kLyfaFV2ts4fJIGZxfTDKHsry7_7OZ49lL2-D5woWaq4a09kImYSF9xqgLCdBrClb_i7VXWYxyXBhK2BMsTunYmI-OVC-UmzDYjEenFutuTIATWqYaVe373dead6HB8y8JugOte4Rl0wk1o-HTrsWYvBf5PDy4GC7GxLCXXNiIiqIZaf6W47OduE7rWmJORX2LtpAcl5fgmtcY4Hgg-SsDoTWg5AbKt3RIgm7SEzj6KFMCEqBiH3Kw5W8SRAWmkvQ"
-        alt="Instagram 4"/>
-      <div class="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
-        <span class="material-symbols-outlined text-white text-3xl">photo_camera</span>
-      </div>
-    </div>
-    <div class="aspect-square relative group overflow-hidden">
-      <img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-        src="https://lh3.googleusercontent.com/aida-public/AB6AXuBVQ2MvKjBN5bWmdDwdg9HTxmcF-fo4ikyCG5Yof-U4eQnaOLx7tVW3NirXTKEDZOElLowHHbE-Qf5T6d032ZTNNbjr0TBSbgL3cHjoPGF5rwj5xTxsk-nBkoyLrxjuevr5GaO0EBYqD3lO_9nRgFiwBWIMJ1GYfc__bQTdJIhqJZ96y879e1LLvSYzl48b85jCb1WdmKSlojLrksiRlg9qgRuSRzCZMtSjtWE9ot_RuGuZQQF2QD0ATBY66rpLOhCLaubOMAbNZVU"
-        alt="Instagram 5"/>
-      <div class="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
-        <span class="material-symbols-outlined text-white text-3xl">photo_camera</span>
-      </div>
-    </div>
-    <div class="aspect-square relative group overflow-hidden">
-      <img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-        src="https://lh3.googleusercontent.com/aida-public/AB6AXuCEAT91cdTEYgMXCcbTGWvkW_EitS4cHiS8B-XVN2MdI0ALfFJf5GeKjw-MzL6O2hA-g03AYN0XmanhIDQNFHID177kQjpT_v6STsmJsWV4RsujLZXSm9oVXoPlrdKV_L_-bJO6cXWPnQgOmH9yJ63XgBYSLSrpNjdCqZeOBKTSfw-PeRr7mFKFDgYfVwRstqbdz29pvRBVje1SZrSP3nt56WrTpPolszE-6Pd03gv7MQB6Lk0wMmUmXDgopdyo1aOpAt9-GxTAbAM"
-        alt="Instagram 6"/>
-      <div class="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
-        <span class="material-symbols-outlined text-white text-3xl">photo_camera</span>
-      </div>
-    </div>
+    }
   </div>
 </section>

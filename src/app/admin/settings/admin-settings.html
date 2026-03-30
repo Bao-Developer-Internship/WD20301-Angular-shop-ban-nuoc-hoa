@@ -1,0 +1,29 @@
+<div class="flex min-h-screen bg-slate-50">
+  <app-admin-sidebar />
+  <main class="flex-1 p-8">
+    <h2 class="text-2xl font-black text-slate-800 mb-8">Cài đặt cửa hàng</h2>
+    <div class="max-w-2xl bg-white rounded-2xl border border-slate-100 shadow-sm p-8">
+      <div class="grid grid-cols-1 gap-6">
+        <div>
+          <label class="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Tên cửa hàng</label>
+          <input [(ngModel)]="shopName" class="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-primary"/>
+        </div>
+        <div>
+          <label class="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Email liên hệ</label>
+          <input [(ngModel)]="email" type="email" class="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-primary"/>
+        </div>
+        <div>
+          <label class="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Số điện thoại</label>
+          <input [(ngModel)]="phone" class="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-primary"/>
+        </div>
+        <div>
+          <label class="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Địa chỉ</label>
+          <input [(ngModel)]="address" class="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-primary"/>
+        </div>
+        <button class="bg-primary text-white font-bold py-3 rounded-xl uppercase tracking-widest text-sm hover:bg-primary/90 transition-colors">
+          Lưu thay đổi
+        </button>
+      </div>
+    </div>
+  </main>
+</div>

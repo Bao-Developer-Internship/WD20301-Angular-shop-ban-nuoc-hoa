@@ -14,6 +14,11 @@ app-footer,
 app-home,
 app-about,
 app-products-list,
+app-products-list,
+app-cart,
+app-checkout,
+app-favorite,
+app-product-detail,
 app-detail {
   display: block;
 }

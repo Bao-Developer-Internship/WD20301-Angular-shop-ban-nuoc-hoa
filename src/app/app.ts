@@ -1,7 +1,8 @@
 import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { RouterOutlet, Router, NavigationEnd } from '@angular/router';
 import { Header } from './header/header';
 import { Footer } from './footer/footer';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -10,5 +11,14 @@ import { Footer } from './footer/footer';
   styleUrl: './app.css'
 })
 export class App {
-  protected readonly title = signal('WD20301-Angular-shop-ban-nuoc-hoa');
+  isAdminOrAuth = signal(false);
+
+  constructor(private router: Router) {
+    this.router.events.pipe(
+      filter(e => e instanceof NavigationEnd)
+    ).subscribe((e: any) => {
+      const url: string = e.urlAfterRedirects || e.url;
+      this.isAdminOrAuth.set(url.startsWith('/admin') || url.startsWith('/login'));
+    });
+  }
 }

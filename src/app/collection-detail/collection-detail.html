@@ -1,0 +1,80 @@
+@if (collection(); as col) {
+  <!-- Hero Banner -->
+  <section class="relative h-80 flex items-end overflow-hidden">
+    <div class="absolute inset-0 bg-cover bg-center" [style.background-image]="'url(' + col.img + ')'"></div>
+    <div class="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/40 to-transparent"></div>
+    <div class="relative z-10 max-w-7xl mx-auto px-4 pb-10 w-full">
+      <nav class="text-xs text-white/60 mb-3 flex gap-2">
+        <a routerLink="/" class="hover:text-white">Trang chủ</a>
+        <span>/</span>
+        <a routerLink="/collections" class="hover:text-white">Bộ sưu tập</a>
+        <span>/</span>
+        <span class="text-white">{{ col.title }}</span>
+      </nav>
+      <h1 class="text-4xl md:text-5xl font-black text-white mb-2">{{ col.title }}</h1>
+      <p class="text-white/70 text-lg">{{ col.subtitle }}</p>
+    </div>
+  </section>
+
+  <!-- Description + brands -->
+  <section class="max-w-7xl mx-auto px-4 py-10 border-b border-slate-100">
+    <div class="flex flex-col md:flex-row justify-between items-start gap-6">
+      <p class="text-slate-500 max-w-2xl leading-relaxed">{{ col.description }}</p>
+      <div class="flex flex-wrap gap-2 flex-shrink-0">
+        @for (brand of col.brands; track brand) {
+          <span class="px-4 py-2 bg-primary/5 border border-primary/10 rounded-full text-xs font-bold text-primary uppercase tracking-widest">
+            {{ brand }}
+          </span>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Products -->
+  <main class="max-w-7xl mx-auto px-4 py-12">
+    <p class="text-sm text-slate-500 mb-8">
+      <span class="text-primary font-bold">{{ products().length }}</span> sản phẩm trong bộ sưu tập
+    </p>
+    @if (products().length > 0) {
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-12">
+        @for (product of products(); track product.id) {
+          <app-product-item [product]="product" variant="portrait" />
+        }
+      </div>
+    } @else {
+      <div class="text-center py-20">
+        <p class="text-4xl mb-4">🌸</p>
+        <p class="text-xl font-bold text-primary">Đang cập nhật sản phẩm</p>
+      </div>
+    }
+  </main>
+
+  <!-- Other Collections -->
+  <section class="bg-slate-50 py-16">
+    <div class="max-w-7xl mx-auto px-4">
+      <h2 class="text-2xl font-black text-primary mb-8">Bộ sưu tập khác</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        @for (other of otherCollections(); track other.id) {
+          <a [routerLink]="['/collections', other.id]"
+            class="group flex gap-5 bg-white rounded-2xl border border-slate-100 shadow-sm p-5 hover:shadow-md hover:border-accent/20 transition-all">
+            <div class="w-24 h-24 rounded-xl overflow-hidden flex-shrink-0">
+              <img [src]="other.img" [alt]="other.title"
+                class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"/>
+            </div>
+            <div class="flex-1 min-w-0">
+              <h3 class="font-black text-primary text-lg group-hover:text-accent transition-colors">{{ other.title }}</h3>
+              <p class="text-slate-400 text-sm mt-1 mb-3 line-clamp-2">{{ other.subtitle }}</p>
+              <span class="text-xs font-bold text-accent">Xem bộ sưu tập →</span>
+            </div>
+          </a>
+        }
+      </div>
+    </div>
+  </section>
+
+} @else {
+  <div class="flex flex-col items-center justify-center min-h-[60vh] gap-4">
+    <p class="text-2xl font-bold text-primary">Không tìm thấy bộ sưu tập</p>
+    <a routerLink="/collections" class="text-accent underline">Xem tất cả bộ sưu tập</a>
+  </div>
+}

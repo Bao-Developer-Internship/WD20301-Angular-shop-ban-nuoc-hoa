@@ -1,0 +1,72 @@
+<div class="flex min-h-screen bg-slate-50">
+  <app-admin-sidebar />
+
+  <main class="flex-1 overflow-y-auto">
+    <!-- Header -->
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-10 px-8 py-4 flex items-center justify-between">
+      <h2 class="text-xl font-black text-slate-800" style="font-family: Georgia, serif">Tổng quan</h2>
+      <div class="flex items-center gap-3">
+        <div class="w-9 h-9 rounded-full bg-accent/20 flex items-center justify-center font-bold text-sm text-primary">A</div>
+        <div>
+          <div class="text-sm font-bold text-slate-800">Admin Luxe</div>
+          <div class="text-xs text-slate-400 uppercase tracking-wider">Quản trị viên</div>
+        </div>
+        <a routerLink="/login" class="ml-4 text-xs text-slate-400 hover:text-red-500 transition-colors">Đăng xuất</a>
+      </div>
+    </header>
+
+    <div class="p-8">
+      <!-- Stats -->
+      <div class="grid grid-cols-4 gap-6 mb-10">
+        @for (s of stats; track s.label) {
+          <div class="bg-white rounded-2xl border border-slate-100 p-6 shadow-sm hover:shadow-md transition-shadow">
+            <div class="flex justify-between items-start mb-4">
+              <span class="text-3xl">{{ s.icon }}</span>
+              <span class="text-xs font-bold" [class]="s.color">{{ s.badge }}</span>
+            </div>
+            <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">{{ s.label }}</p>
+            <h3 class="text-2xl font-black text-slate-800">{{ s.value }}</h3>
+          </div>
+        }
+      </div>
+
+      <!-- Orders Table -->
+      <div class="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
+        <div class="px-6 py-5 border-b border-slate-100 flex justify-between items-center">
+          <h4 class="font-black text-slate-800 text-lg" style="font-family: Georgia, serif">Đơn hàng gần đây</h4>
+          <a routerLink="/admin/orders" class="text-accent text-sm font-bold hover:underline">Xem tất cả →</a>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full">
+            <thead class="bg-slate-50">
+              <tr>
+                @for (h of ['Mã đơn', 'Khách hàng', 'Sản phẩm', 'Giá trị', 'Trạng thái', 'Ngày đặt']; track h) {
+                  <th class="px-6 py-3 text-left text-xs font-bold text-slate-400 uppercase tracking-widest">{{ h }}</th>
+                }
+              </tr>
+            </thead>
+            <tbody>
+              @for (o of orders; track o.id) {
+                <tr class="border-t border-slate-50 hover:bg-slate-50 transition-colors">
+                  <td class="px-6 py-4 text-sm font-bold text-slate-800">{{ o.id }}</td>
+                  <td class="px-6 py-4">
+                    <div class="flex items-center gap-3">
+                      <div class="w-8 h-8 rounded-full bg-accent/20 flex items-center justify-center text-xs font-bold text-primary">{{ o.initials }}</div>
+                      <span class="text-sm text-slate-700">{{ o.customer }}</span>
+                    </div>
+                  </td>
+                  <td class="px-6 py-4 text-sm text-slate-500">{{ o.product }}</td>
+                  <td class="px-6 py-4 text-sm font-bold text-slate-800">{{ o.price }}</td>
+                  <td class="px-6 py-4">
+                    <span class="px-3 py-1 rounded-full text-xs font-bold" [class]="o.statusClass">{{ o.status }}</span>
+                  </td>
+                  <td class="px-6 py-4 text-xs text-slate-400">{{ o.date }}</td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>

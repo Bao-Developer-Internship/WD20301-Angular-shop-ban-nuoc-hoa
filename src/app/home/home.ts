@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FeaturedCollections } from '../featured-collections/featured-collections';
 import { BestSellers } from '../best-sellers/best-sellers';
+import { GalleryService } from '../gallery.service';
 
 @Component({
   selector: 'app-home',
@@ -8,4 +9,6 @@ import { BestSellers } from '../best-sellers/best-sellers';
   templateUrl: './home.html',
   styleUrl: './home.css',
 })
-export class Home {}
+export class Home {
+  gallery = inject(GalleryService);
+}

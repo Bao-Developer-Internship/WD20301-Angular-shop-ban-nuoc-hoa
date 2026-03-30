@@ -1,39 +1,23 @@
-import { Component, signal } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Component, inject, signal, OnInit } from '@angular/core';
+import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ProductService } from '../product.service';
+import { Product } from '../product-item/product-item';
+import { AddToCartButton } from '../add-to-cart-button/add-to-cart-button';
 
 @Component({
   selector: 'app-product-detail',
-  imports: [RouterLink],
+  imports: [RouterLink, AddToCartButton],
   templateUrl: './product-detail.html',
 })
-export class ProductDetail {
+export class ProductDetail implements OnInit {
+  private route = inject(ActivatedRoute);
+  private productService = inject(ProductService);
+
+  product = signal<Product | null>(null);
+  loading = signal(true);
   selectedImage = signal(0);
   quantity = signal(1);
   showWholesale = signal(false);
-
-  product = {
-    name: 'Elite Royal Oud',
-    brand: 'Parfum de Prestige',
-    price: 4500000,
-    salePrice: 3250000,
-    rating: 4.9,
-    reviews: 128,
-    sold: 2400,
-    description: 'Elite Royal Oud là bản giao hưởng của sự quyền quý, kết hợp giữa tinh túy của gỗ Trầm hương phương Đông và vẻ tươi mát của Cam Bergamot Ý.',
-    images: [
-      'https://fimgs.net/mdimg/perfume/375x500.73669.jpg',
-      'https://fimgs.net/mdimg/perfume/375x500.1826.jpg',
-      'https://fimgs.net/mdimg/perfume/375x500.2825.jpg',
-      'https://fimgs.net/mdimg/perfume/375x500.14365.jpg',
-    ],
-    notes: {
-      top: 'Cam Bergamot, Hồng tiêu, Cây bách',
-      heart: 'Hoa hồng Bulgary, Trầm hương, Gỗ tuyết tùng',
-      base: 'Hổ phách, Xạ hương trắng, Hoắc hương',
-    },
-    longevity: 5,
-    sillage: 4,
-  };
 
   reviews = [
     { name: 'Nguyễn Hoàng', initial: 'NH', rating: 5, date: '2 ngày trước', comment: 'Mùi hương thực sự đẳng cấp. Độ bám tỏa cực tốt, dùng từ sáng đến tối vẫn còn nghe mùi.' },
@@ -45,6 +29,16 @@ export class ProductDetail {
     { qty: '100+ chai', price: '1.950.000₫', discount: '-40%' },
     { qty: '300+ chai', price: 'Liên hệ trực tiếp', discount: 'VIP' },
   ];
+
+  ngOnInit() {
+    const id = this.route.snapshot.paramMap.get('id');
+    if (id) {
+      this.productService.getById(id).subscribe({
+        next: (p) => { this.product.set(p); this.loading.set(false); },
+        error: () => this.loading.set(false),
+      });
+    }
+  }
 
   stars(n: number) { return Array(Math.floor(n)).fill('★'); }
   emptyStars(n: number) { return Array(5 - Math.floor(n)).fill('☆'); }

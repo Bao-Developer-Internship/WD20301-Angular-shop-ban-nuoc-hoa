@@ -1,0 +1,117 @@
+<!-- Hero -->
+<section class="relative h-64 flex items-center justify-center overflow-hidden bg-primary">
+  <div class="absolute inset-0 opacity-10"
+    style="background-image: url('https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=1600&q=80'); background-size: cover; background-position: center;"></div>
+  <div class="relative z-10 text-center">
+    <span class="text-accent text-sm font-bold uppercase tracking-widest block mb-3">Chúng tôi luôn sẵn sàng</span>
+    <h1 class="text-white text-5xl font-black">Liên Hệ</h1>
+  </div>
+</section>
+
+<main class="max-w-6xl mx-auto px-4 py-16">
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
+
+    <!-- Left: Contact channels -->
+    <div class="space-y-8">
+      <div>
+        <h2 class="text-2xl font-black text-primary mb-2">Kết nối với chúng tôi</h2>
+        <p class="text-slate-500">Chọn kênh liên hệ phù hợp hoặc để lại thông tin để nhân viên tư vấn liên hệ lại.</p>
+      </div>
+
+      <!-- Zalo -->
+      <a href="https://zalo.me/0901234567" target="_blank"
+        class="flex items-center gap-5 p-6 bg-white rounded-2xl border border-slate-100 shadow-sm hover:shadow-md hover:border-blue-200 transition-all group">
+        <div class="w-14 h-14 rounded-2xl flex items-center justify-center flex-shrink-0 text-2xl font-black text-white"
+          style="background: #0068FF;">Z</div>
+        <div>
+          <p class="font-black text-primary text-lg group-hover:text-blue-600 transition-colors">Zalo</p>
+          <p class="text-slate-400 text-sm">Chat trực tiếp qua Zalo</p>
+          <p class="text-blue-500 font-semibold text-sm mt-1">0901 234 567</p>
+        </div>
+        <span class="ml-auto text-slate-300 group-hover:text-blue-400 transition-colors text-xl">→</span>
+      </a>
+
+      <!-- Email -->
+      <a href="mailto:contact@luxescent.vn"
+        class="flex items-center gap-5 p-6 bg-white rounded-2xl border border-slate-100 shadow-sm hover:shadow-md hover:border-accent/30 transition-all group">
+        <div class="w-14 h-14 rounded-2xl bg-accent/10 flex items-center justify-center flex-shrink-0 text-2xl">
+          📧
+        </div>
+        <div>
+          <p class="font-black text-primary text-lg group-hover:text-accent transition-colors">Email</p>
+          <p class="text-slate-400 text-sm">Phản hồi trong vòng 24 giờ</p>
+          <p class="text-accent font-semibold text-sm mt-1">contact&#64;luxescent.vn</p>
+        </div>
+        <span class="ml-auto text-slate-300 group-hover:text-accent transition-colors text-xl">→</span>
+      </a>
+
+      <!-- Hotline -->
+      <a href="tel:0901234567"
+        class="flex items-center gap-5 p-6 bg-white rounded-2xl border border-slate-100 shadow-sm hover:shadow-md hover:border-green-200 transition-all group">
+        <div class="w-14 h-14 rounded-2xl bg-green-50 flex items-center justify-center flex-shrink-0 text-2xl">
+          📞
+        </div>
+        <div>
+          <p class="font-black text-primary text-lg group-hover:text-green-600 transition-colors">Hotline</p>
+          <p class="text-slate-400 text-sm">Thứ 2 – Thứ 7 · 8:00 – 21:00</p>
+          <p class="text-green-600 font-semibold text-sm mt-1">0901 234 567</p>
+        </div>
+        <span class="ml-auto text-slate-300 group-hover:text-green-400 transition-colors text-xl">→</span>
+      </a>
+
+      <!-- Address -->
+      <div class="flex items-center gap-5 p-6 bg-primary/5 rounded-2xl border border-primary/10">
+        <div class="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center flex-shrink-0 text-2xl">
+          📍
+        </div>
+        <div>
+          <p class="font-black text-primary text-lg">Showroom</p>
+          <p class="text-slate-500 text-sm mt-1">123 Đường Hoa Hồng, Quận 1<br/>TP. Hồ Chí Minh, Việt Nam</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: Form -->
+    <div class="bg-white rounded-2xl border border-slate-100 shadow-sm p-8">
+      <h2 class="text-2xl font-black text-primary mb-2">Để lại thông tin</h2>
+      <p class="text-slate-400 text-sm mb-8">Nhân viên tư vấn sẽ liên hệ lại trong vòng 30 phút.</p>
+
+      @if (submitted()) {
+        <div class="flex flex-col items-center justify-center py-12 gap-4 text-center">
+          <span class="text-6xl">✅</span>
+          <p class="text-xl font-black text-primary">Đã nhận thông tin!</p>
+          <p class="text-slate-400 text-sm">Nhân viên sẽ liên hệ bạn sớm nhất có thể.</p>
+        </div>
+      } @else {
+        <form (ngSubmit)="submit()" class="flex flex-col gap-5">
+          <div>
+            <label class="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Họ và tên *</label>
+            <input [(ngModel)]="form.name" name="name" type="text" placeholder="Nguyễn Văn A" required
+              class="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-primary transition-colors"/>
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Số điện thoại *</label>
+            <input [(ngModel)]="form.phone" name="phone" type="tel" placeholder="0901 234 567" required
+              class="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-primary transition-colors"/>
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Email *</label>
+            <input [(ngModel)]="form.email" name="email" type="email" placeholder="email@example.com" required
+              class="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-primary transition-colors"/>
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Nội dung</label>
+            <textarea [(ngModel)]="form.message" name="message" rows="4"
+              placeholder="Bạn cần tư vấn về sản phẩm nào? Hoặc có câu hỏi gì cho chúng tôi..."
+              class="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-primary transition-colors resize-none"></textarea>
+          </div>
+          <button type="submit"
+            class="w-full bg-primary text-white py-4 rounded-xl font-bold uppercase tracking-widest text-sm hover:bg-primary/90 transition-colors">
+            Gửi thông tin
+          </button>
+        </form>
+      }
+    </div>
+
+  </div>
+</main>

@@ -1,3 +1,8 @@
+@if (loading()) {
+  <div class="flex justify-center items-center min-h-[60vh]">
+    <div class="animate-spin rounded-full h-12 w-12 border-4 border-primary border-t-transparent"></div>
+  </div>
+} @else if (product(); as p) {
 <main class="max-w-7xl mx-auto px-4 py-10">
 
   <!-- Breadcrumb -->
@@ -6,7 +11,7 @@
     <span>/</span>
     <a routerLink="/products" class="hover:text-primary">Cửa hàng</a>
     <span>/</span>
-    <span class="text-primary font-semibold">{{ product.name }}</span>
+    <span class="text-primary font-semibold">{{ p.name }}</span>
   </nav>
 
   <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
@@ -14,17 +19,10 @@
     <!-- Gallery -->
     <div class="sticky top-28">
       <div class="relative aspect-[4/5] rounded-2xl overflow-hidden bg-white shadow-xl mb-4">
-        <img [src]="product.images[selectedImage()]" [alt]="product.name"
+        <img [src]="p.img" [alt]="p.name"
           class="w-full h-full object-cover transition-transform duration-500 hover:scale-110 cursor-zoom-in"/>
-        <span class="absolute top-5 right-5 bg-primary text-white text-xs font-bold px-4 py-2 rounded-full uppercase tracking-widest">Mới nhất</span>
-      </div>
-      <div class="grid grid-cols-4 gap-3">
-        @for (img of product.images; track $index) {
-          <div (click)="selectedImage.set($index)"
-            class="aspect-square rounded-xl overflow-hidden cursor-pointer transition-all border-2"
-            [class]="selectedImage() === $index ? 'border-primary opacity-100' : 'border-transparent opacity-50 hover:opacity-80'">
-            <img [src]="img" class="w-full h-full object-cover"/>
-          </div>
+        @if (p.badge) {
+          <span class="absolute top-5 right-5 bg-primary text-white text-xs font-bold px-4 py-2 rounded-full uppercase tracking-widest">{{ p.badge }}</span>
         }
       </div>
     </div>
@@ -32,47 +30,49 @@
     <!-- Info -->
     <div>
       <div class="border-b border-slate-200 pb-6 mb-6">
-        <h1 class="text-4xl font-black text-primary mb-2">{{ product.name }}</h1>
-        <p class="text-accent font-bold text-lg tracking-widest mb-4">{{ product.brand }}</p>
+        <h1 class="text-4xl font-black text-primary mb-2">{{ p.name }}</h1>
+        <p class="text-accent font-bold text-lg tracking-widest mb-4">{{ p.brand }}</p>
         <div class="flex items-center gap-3">
-          <span class="text-accent text-xl">{{ stars(product.rating).join('') }}</span>
-          <span class="text-sm text-slate-400">({{ product.reviews }} đánh giá) | {{ product.sold.toLocaleString() }} đã bán</span>
+          <span class="text-accent text-xl">{{ stars(p.rating).join('') }}</span>
+          <span class="text-sm text-slate-400">({{ p.reviews }} đánh giá) | {{ p.sold.toLocaleString() }} đã bán</span>
         </div>
       </div>
 
       <!-- Price -->
       <div class="mb-6">
         <div class="flex items-baseline gap-4 mb-3">
-          <span class="text-4xl font-black text-primary">{{ product.salePrice.toLocaleString() }}₫</span>
-          <span class="text-xl text-slate-300 line-through">{{ product.price.toLocaleString() }}₫</span>
+          <span class="text-4xl font-black text-primary">{{ p.price.toLocaleString() }}₫</span>
+          @if (p.oldPrice) {
+            <span class="text-xl text-slate-300 line-through">{{ p.oldPrice.toLocaleString() }}₫</span>
+          }
         </div>
-        <p class="text-slate-500 leading-relaxed">{{ product.description }}</p>
+        <p class="text-slate-500 leading-relaxed">{{ p.description }}</p>
       </div>
 
       <!-- Scent notes -->
-      <div class="bg-primary/5 rounded-2xl p-6 border border-primary/10 mb-6 grid grid-cols-2 gap-4">
-        <div>
-          <p class="text-xs font-bold text-primary uppercase tracking-widest mb-2">Độ lưu hương</p>
-          <span class="text-accent">{{ stars(product.longevity).join('') }}</span>
-          <span class="text-sm text-slate-500 ml-2">Rất lâu (12h+)</span>
+      @if (p.notes) {
+        <div class="bg-primary/5 rounded-2xl p-6 border border-primary/10 mb-6 grid grid-cols-2 gap-4">
+          <div>
+            <p class="text-xs font-bold text-primary uppercase tracking-widest mb-2">Độ lưu hương</p>
+            <span class="text-accent">{{ stars(p.longevity).join('') }}</span>
+            <span class="text-sm text-slate-500 ml-2">Rất lâu (12h+)</span>
+          </div>
+          <div>
+            <p class="text-xs font-bold text-primary uppercase tracking-widest mb-2">Độ tỏa hương</p>
+            <span class="text-accent">{{ stars(p.sillage).join('') }}{{ emptyStars(p.sillage).join('') }}</span>
+            <span class="text-sm text-slate-500 ml-2">Xa (2m)</span>
+          </div>
         </div>
-        <div>
-          <p class="text-xs font-bold text-primary uppercase tracking-widest mb-2">Độ tỏa hương</p>
-          <span class="text-accent">{{ stars(product.sillage).join('') }}{{ emptyStars(product.sillage).join('') }}</span>
-          <span class="text-sm text-slate-500 ml-2">Xa (2m)</span>
-        </div>
-      </div>
+      }
 
       <!-- Actions -->
-      <div class="flex gap-3 mb-4">
-        <div class="flex items-center border-2 border-slate-200 rounded-xl overflow-hidden">
+      <div class="mb-4">
+        <div class="flex items-center border-2 border-slate-200 rounded-xl overflow-hidden w-fit mb-3">
           <button (click)="quantity.set(quantity() > 1 ? quantity() - 1 : 1)" class="px-5 py-3 text-xl font-bold hover:bg-primary/5">-</button>
           <span class="px-5 font-bold text-lg">{{ quantity() }}</span>
           <button (click)="quantity.set(quantity() + 1)" class="px-5 py-3 text-xl font-bold hover:bg-primary/5">+</button>
         </div>
-        <button class="flex-1 bg-primary text-white rounded-xl font-bold uppercase tracking-widest text-sm flex items-center justify-center gap-2 hover:bg-primary/90 transition-colors">
-          🛒 Thêm vào giỏ
-        </button>
+        <app-add-to-cart-button [product]="p" [quantity]="quantity()" [showFavorite]="true" />
       </div>
       <button (click)="showWholesale.set(!showWholesale())"
         class="w-full py-4 border-2 border-primary text-primary rounded-xl font-bold uppercase tracking-widest text-sm hover:bg-primary hover:text-white transition-all">
@@ -105,51 +105,53 @@
   </div>
 
   <!-- Scent Pyramid -->
-  <section class="mt-24">
-    <div class="text-center mb-12">
-      <h2 class="text-4xl font-black text-primary uppercase tracking-widest mb-4">Scent Pyramid</h2>
-      <div class="w-20 h-1 bg-accent mx-auto rounded-full"></div>
-    </div>
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-      <div class="space-y-4">
-        <div class="bg-primary/8 border-l-4 border-primary p-6 rounded-r-2xl ml-12 hover:ml-14 transition-all">
-          <div class="flex items-center gap-4">
-            <span class="text-4xl">🌿</span>
-            <div>
-              <p class="text-xs font-bold text-primary uppercase tracking-widest mb-1">Hương đầu (Top Notes)</p>
-              <p class="text-slate-600">{{ product.notes.top }}</p>
+  @if (p.notes) {
+    <section class="mt-24">
+      <div class="text-center mb-12">
+        <h2 class="text-4xl font-black text-primary uppercase tracking-widest mb-4">Scent Pyramid</h2>
+        <div class="w-20 h-1 bg-accent mx-auto rounded-full"></div>
+      </div>
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div class="space-y-4">
+          <div class="bg-primary/5 border-l-4 border-primary p-6 rounded-r-2xl ml-12 hover:ml-14 transition-all">
+            <div class="flex items-center gap-4">
+              <span class="text-4xl">🌿</span>
+              <div>
+                <p class="text-xs font-bold text-primary uppercase tracking-widest mb-1">Hương đầu (Top Notes)</p>
+                <p class="text-slate-600">{{ p.notes.top }}</p>
+              </div>
+            </div>
+          </div>
+          <div class="bg-primary/10 border-l-4 border-primary p-7 rounded-r-2xl ml-6 hover:ml-8 transition-all">
+            <div class="flex items-center gap-4">
+              <span class="text-4xl">🌸</span>
+              <div>
+                <p class="text-xs font-bold text-primary uppercase tracking-widest mb-1">Hương giữa (Heart Notes)</p>
+                <p class="text-slate-600">{{ p.notes.heart }}</p>
+              </div>
+            </div>
+          </div>
+          <div class="bg-primary/20 border-l-4 border-primary p-8 rounded-r-2xl hover:ml-2 transition-all">
+            <div class="flex items-center gap-4">
+              <span class="text-4xl">🌲</span>
+              <div>
+                <p class="text-xs font-bold text-primary uppercase tracking-widest mb-1">Hương cuối (Base Notes)</p>
+                <p class="text-slate-600">{{ p.notes.base }}</p>
+              </div>
             </div>
           </div>
         </div>
-        <div class="bg-primary/15 border-l-4 border-primary p-7 rounded-r-2xl ml-6 hover:ml-8 transition-all">
-          <div class="flex items-center gap-4">
-            <span class="text-4xl">🌸</span>
-            <div>
-              <p class="text-xs font-bold text-primary uppercase tracking-widest mb-1">Hương giữa (Heart Notes)</p>
-              <p class="text-slate-600">{{ product.notes.heart }}</p>
-            </div>
-          </div>
-        </div>
-        <div class="bg-primary/25 border-l-4 border-primary p-8 rounded-r-2xl hover:ml-2 transition-all">
-          <div class="flex items-center gap-4">
-            <span class="text-4xl">🌲</span>
-            <div>
-              <p class="text-xs font-bold text-primary uppercase tracking-widest mb-1">Hương cuối (Base Notes)</p>
-              <p class="text-slate-600">{{ product.notes.base }}</p>
-            </div>
-          </div>
+        <div>
+          <h3 class="text-2xl font-black text-primary mb-4">Cốt cách thượng lưu</h3>
+          <p class="text-slate-500 leading-relaxed mb-4">Cấu trúc tầng hương được thiết kế tinh vi để mang lại trải nghiệm đa chiều.</p>
+          <ul class="space-y-3">
+            <li class="flex items-center gap-3 text-sm"><span class="text-primary text-xl">✓</span> Nguyên liệu cao cấp nhập khẩu từ Pháp & Ý</li>
+            <li class="flex items-center gap-3 text-sm"><span class="text-primary text-xl">✓</span> Công thức pha trộn thủ công bởi các chuyên gia</li>
+          </ul>
         </div>
       </div>
-      <div>
-        <h3 class="text-2xl font-black text-primary mb-4">Cốt cách thượng lưu</h3>
-        <p class="text-slate-500 leading-relaxed mb-4">Cấu trúc tầng hương được thiết kế tinh vi để mang lại trải nghiệm đa chiều. Những giây đầu tiên bùng nổ với sự sảng khoái của cam Bergamot, sau đó dần lắng xuống nhường chỗ cho trái tim ấm áp của Trầm hương huyền bí.</p>
-        <ul class="space-y-3">
-          <li class="flex items-center gap-3 text-sm"><span class="text-primary text-xl">✓</span> Nguyên liệu cao cấp nhập khẩu từ Pháp & Ý</li>
-          <li class="flex items-center gap-3 text-sm"><span class="text-primary text-xl">✓</span> Công thức pha trộn thủ công bởi các chuyên gia</li>
-        </ul>
-      </div>
-    </div>
-  </section>
+    </section>
+  }
 
   <!-- Reviews -->
   <section class="mt-24 border-t border-slate-200 pt-16">
@@ -157,10 +159,10 @@
       <div>
         <h2 class="text-4xl font-black text-primary mb-4">Đánh giá khách hàng</h2>
         <div class="flex items-center gap-4">
-          <span class="text-5xl font-black text-primary">{{ product.rating }}/5</span>
+          <span class="text-5xl font-black text-primary">{{ p.rating }}/5</span>
           <div>
-            <div class="text-accent text-2xl">{{ stars(product.rating).join('') }}</div>
-            <p class="text-sm text-slate-400">Dựa trên {{ product.reviews }} đánh giá</p>
+            <div class="text-accent text-2xl">{{ stars(p.rating).join('') }}</div>
+            <p class="text-sm text-slate-400">Dựa trên {{ p.reviews }} đánh giá</p>
           </div>
         </div>
       </div>
@@ -186,3 +188,9 @@
   </section>
 
 </main>
+} @else {
+  <div class="flex flex-col items-center justify-center min-h-[60vh] gap-4">
+    <p class="text-2xl font-bold text-primary">Không tìm thấy sản phẩm</p>
+    <a routerLink="/products" class="text-accent underline">Quay lại cửa hàng</a>
+  </div>
+}

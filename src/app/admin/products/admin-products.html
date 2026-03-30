@@ -1,0 +1,45 @@
+<div class="flex min-h-screen bg-slate-50">
+  <app-admin-sidebar />
+  <main class="flex-1 p-8">
+    <div class="flex justify-between items-center mb-8">
+      <h2 class="text-2xl font-black text-slate-800" style="font-family: Georgia, serif">Quản lý sản phẩm</h2>
+      <button class="bg-accent text-primary font-bold px-6 py-3 rounded-xl text-sm uppercase tracking-widest hover:bg-accent/90 transition-colors">
+        + Thêm sản phẩm
+      </button>
+    </div>
+
+    <div class="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
+      <table class="w-full">
+        <thead class="bg-slate-50">
+          <tr>
+            @for (h of ['Sản phẩm', 'Thương hiệu', 'Giá', 'Đã bán', 'Đánh giá', 'Thao tác']; track h) {
+              <th class="px-6 py-3 text-left text-xs font-bold text-slate-400 uppercase tracking-widest">{{ h }}</th>
+            }
+          </tr>
+        </thead>
+        <tbody>
+          @for (p of items; track p.id) {
+            <tr class="border-t border-slate-50 hover:bg-slate-50 transition-colors">
+              <td class="px-6 py-4">
+                <div class="flex items-center gap-3">
+                  <img [src]="p.img" class="w-12 h-12 rounded-xl object-cover"/>
+                  <span class="font-semibold text-slate-800 text-sm">{{ p.name }}</span>
+                </div>
+              </td>
+              <td class="px-6 py-4 text-sm text-slate-500">{{ p.brand }}</td>
+              <td class="px-6 py-4 text-sm font-bold text-primary">{{ p.price.toLocaleString('vi-VN') }}₫</td>
+              <td class="px-6 py-4 text-sm text-slate-500">{{ p.sold.toLocaleString() }}</td>
+              <td class="px-6 py-4 text-sm text-accent font-bold">★ {{ p.rating }}</td>
+              <td class="px-6 py-4">
+                <div class="flex gap-2">
+                  <a [routerLink]="['/product', p.id]" class="text-xs px-3 py-1 rounded-lg bg-primary/10 text-primary font-bold hover:bg-primary/20 transition-colors">Xem</a>
+                  <button class="text-xs px-3 py-1 rounded-lg bg-red-50 text-red-500 font-bold hover:bg-red-100 transition-colors">Xóa</button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </main>
+</div>

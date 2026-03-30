@@ -4,7 +4,7 @@
     <h2 class="text-4xl md:text-5xl font-black text-primary dark:text-white">Được Yêu Thích Nhất</h2>
   </div>
   <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-16">
-    @for (product of products; track product.name) {
+    @for (product of (products$ | async) ?? []; track product.name) {
       <app-product-item [product]="product" variant="square" />
     }
   </div>

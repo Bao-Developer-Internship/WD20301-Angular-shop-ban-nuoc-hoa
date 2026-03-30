@@ -1,0 +1,134 @@
+<main class="min-h-screen bg-slate-50 py-12 px-4">
+  <div class="max-w-4xl mx-auto">
+    <nav class="text-xs text-slate-400 mb-6 flex gap-2">
+      <a routerLink="/" class="hover:text-primary">Trang chủ</a>
+      <span>/</span>
+      <span class="text-primary font-semibold">Tài khoản</span>
+    </nav>
+    <h1 class="text-3xl font-black text-primary mb-8">Tài khoản của tôi</h1>
+
+    <!-- Tabs -->
+    <div class="flex gap-1 border-b border-slate-200 mb-8">
+      <button (click)="activeTab.set('profile')"
+        class="px-5 py-3 text-sm font-bold transition-all border-b-2 -mb-px"
+        [class]="activeTab() === 'profile' ? 'border-accent text-primary' : 'border-transparent text-slate-400 hover:text-primary'">
+        👤 Thông tin
+      </button>
+      <button (click)="activeTab.set('orders')"
+        class="px-5 py-3 text-sm font-bold transition-all border-b-2 -mb-px"
+        [class]="activeTab() === 'orders' ? 'border-accent text-primary' : 'border-transparent text-slate-400 hover:text-primary'">
+        📦 Đơn hàng
+      </button>
+      <button (click)="activeTab.set('password')"
+        class="px-5 py-3 text-sm font-bold transition-all border-b-2 -mb-px"
+        [class]="activeTab() === 'password' ? 'border-accent text-primary' : 'border-transparent text-slate-400 hover:text-primary'">
+        🔒 Mật khẩu
+      </button>
+    </div>
+
+    <!-- Tab: Profile -->
+    @if (activeTab() === 'profile') {
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="bg-white rounded-2xl border border-slate-100 shadow-sm p-8 text-center">
+          <div class="relative inline-block mb-4">
+            <div class="w-24 h-24 rounded-full bg-primary border-4 border-accent flex items-center justify-center overflow-hidden mx-auto">
+              @if (auth.user()?.avatarUrl) {
+                <img [src]="auth.user()?.avatarUrl" class="w-full h-full object-cover"/>
+              } @else {
+                <span class="text-white font-black text-3xl">{{ initials }}</span>
+              }
+            </div>
+            <label class="absolute bottom-0 right-0 w-8 h-8 bg-primary border-2 border-white rounded-full flex items-center justify-center cursor-pointer hover:bg-accent transition-colors">
+              <span class="text-white text-xs">✏️</span>
+              <input type="file" accept="image/*" class="hidden" (change)="onAvatarChange($event)"/>
+            </label>
+          </div>
+          <p class="font-bold text-primary text-lg">{{ auth.user()?.name }}</p>
+          <p class="text-slate-400 text-sm mb-3">{{ auth.user()?.email }}</p>
+          <span class="text-xs font-bold px-3 py-1 rounded-full bg-green-100 text-green-700">Thành viên</span>
+          <button (click)="logout()" class="mt-6 w-full text-sm text-red-400 hover:text-red-600 transition-colors block">
+            🚪 Đăng xuất
+          </button>
+        </div>
+
+        <div class="md:col-span-2 bg-white rounded-2xl border border-slate-100 shadow-sm p-8">
+          <h3 class="text-lg font-black text-primary mb-6">Thông tin cá nhân</h3>
+          <div class="grid grid-cols-1 gap-5">
+            <div>
+              <label class="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Họ và tên</label>
+              <input [(ngModel)]="form.name" class="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-primary"/>
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Email</label>
+              <input [value]="auth.user()?.email" disabled class="w-full border border-slate-100 rounded-xl px-4 py-3 text-sm bg-slate-50 text-slate-400 cursor-not-allowed"/>
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Số điện thoại</label>
+              <input [(ngModel)]="form.phone" class="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-primary"/>
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Địa chỉ giao hàng</label>
+              <textarea [(ngModel)]="form.address" rows="3" class="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-primary resize-none"></textarea>
+            </div>
+            <button (click)="saveProfile()"
+              class="w-fit px-8 py-3 rounded-xl font-bold text-sm uppercase tracking-widest transition-all"
+              [class]="saved() ? 'bg-green-500 text-white' : 'bg-primary text-white hover:bg-primary/90'">
+              {{ saved() ? '✓ Đã lưu' : 'Lưu thay đổi' }}
+            </button>
+          </div>
+        </div>
+      </div>
+    }
+
+    <!-- Tab: Orders -->
+    @if (activeTab() === 'orders') {
+      <div class="space-y-4">
+        @for (o of orders; track o.id) {
+          <div class="bg-white rounded-2xl border border-slate-100 shadow-sm p-6 flex items-center justify-between gap-4 flex-wrap">
+            <div>
+              <p class="font-bold text-primary text-sm mb-1">#{{ o.id }}</p>
+              <p class="text-xs text-slate-400">{{ o.date }} · {{ o.product }}</p>
+            </div>
+            <div class="flex items-center gap-4">
+              <span class="px-3 py-1 rounded-full text-xs font-bold" [class]="o.statusClass">{{ o.status }}</span>
+              <span class="font-black text-primary">{{ o.total.toLocaleString('vi-VN') }}₫</span>
+            </div>
+          </div>
+        }
+      </div>
+    }
+
+    <!-- Tab: Password -->
+    @if (activeTab() === 'password') {
+      <div class="max-w-md bg-white rounded-2xl border border-slate-100 shadow-sm p-8">
+        <h3 class="text-lg font-black text-primary mb-6">Đổi mật khẩu</h3>
+        @if (pwError()) {
+          <div class="mb-4 px-4 py-3 bg-red-50 border border-red-200 rounded-xl text-red-600 text-sm">{{ pwError() }}</div>
+        }
+        @if (pwSaved()) {
+          <div class="mb-4 px-4 py-3 bg-green-50 border border-green-200 rounded-xl text-green-600 text-sm">✓ Đã đổi mật khẩu thành công</div>
+        }
+        <div class="flex flex-col gap-5">
+          <div>
+            <label class="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Mật khẩu hiện tại</label>
+            <input [(ngModel)]="passwordForm.current" type="password" placeholder="••••••••"
+              class="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-primary"/>
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Mật khẩu mới</label>
+            <input [(ngModel)]="passwordForm.newPw" type="password" placeholder="••••••••"
+              class="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-primary"/>
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Xác nhận mật khẩu mới</label>
+            <input [(ngModel)]="passwordForm.confirm" type="password" placeholder="••••••••"
+              class="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-primary"/>
+          </div>
+          <button (click)="savePassword()" class="w-fit px-8 py-3 bg-primary text-white rounded-xl font-bold text-sm uppercase tracking-widest hover:bg-primary/90 transition-colors">
+            Đổi mật khẩu
+          </button>
+        </div>
+      </div>
+    }
+  </div>
+</main>

@@ -1,0 +1,30 @@
+<aside class="w-60 min-w-60 min-h-screen bg-primary flex flex-col justify-between py-7 border-r border-accent/20 sticky top-0">
+  <div>
+    <!-- Logo -->
+    <div class="px-6 mb-10 flex items-center gap-3">
+      <div class="w-10 h-10 rounded-full bg-accent flex items-center justify-center text-primary font-black text-lg">L</div>
+      <div>
+        <div class="text-accent font-black tracking-widest uppercase text-sm">Luxe Scent</div>
+        <div class="text-accent/50 text-[9px] uppercase tracking-widest">Quản lý</div>
+      </div>
+    </div>
+
+    <!-- Nav -->
+    <nav class="flex flex-col">
+      @for (item of menu; track item.href) {
+        <a [routerLink]="item.href" routerLinkActive="bg-accent/15 border-r-4 border-accent text-accent"
+          class="flex items-center gap-4 px-8 py-4 text-accent/60 hover:text-accent hover:bg-white/5 transition-all text-sm font-medium no-underline">
+          <span class="text-lg">{{ item.icon }}</span>
+          <span>{{ item.label }}</span>
+        </a>
+      }
+    </nav>
+  </div>
+
+  <!-- Bottom -->
+  <div class="px-5">
+    <a routerLink="/" class="flex items-center justify-center gap-2 w-full bg-accent text-primary font-bold py-3 rounded-xl text-xs uppercase tracking-widest hover:bg-accent/90 transition-colors no-underline">
+      ← Về trang chủ
+    </a>
+  </div>
+</aside>

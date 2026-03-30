@@ -1,57 +1,71 @@
-<div class="group relative">
+<a [routerLink]="['/product', product.id]" class="group relative block cursor-pointer">
 
-  <!-- Portrait (4/5) dùng cho trang products-list -->
+  <!-- Portrait -->
   @if (variant === 'portrait') {
     <div class="relative aspect-[4/5] overflow-hidden rounded-2xl bg-[#f0f2f1] mb-6">
       <img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
         [src]="product.img" [alt]="product.name"/>
-      <div class="absolute inset-x-0 bottom-0 p-4 opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-0 transition-all duration-300">
-        <button class="w-full bg-primary text-white py-3 rounded-xl font-bold text-sm shadow-xl flex items-center justify-center gap-2 hover:bg-primary/90">
-          <span class="material-symbols-outlined text-lg">add_shopping_cart</span>THÊM VÀO GIỎ
-        </button>
-      </div>
+      <!-- Favorite btn -->
+      <button (click)="toggleFavorite($event)"
+        class="absolute top-4 right-4 w-9 h-9 rounded-full flex items-center justify-center transition-all shadow"
+        [class]="isFav ? 'bg-red-500 text-white' : 'bg-white/80 text-slate-400 hover:text-red-500'">
+        {{ isFav ? '♥' : '♡' }}
+      </button>
       @if (product.badge) {
         <span class="absolute top-4 left-4 px-3 py-1 rounded-full text-[10px] font-black tracking-tighter shadow-sm uppercase"
           [class]="product.badge === 'Mới' ? 'bg-accent text-white' : 'bg-white/90 backdrop-blur text-primary'">
           {{ product.badge }}
         </span>
       }
+      <div class="absolute inset-x-0 bottom-0 p-4 opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-0 transition-all duration-300">
+        <button (click)="addToCart($event)"
+          class="w-full bg-primary text-white py-3 rounded-xl font-bold text-sm shadow-xl flex items-center justify-center gap-2 hover:bg-primary/90">
+          🛒 THÊM VÀO GIỎ
+        </button>
+      </div>
     </div>
     <div class="text-center px-2">
       <p class="text-[10px] text-accent font-bold uppercase tracking-[0.2em] mb-1">{{ product.brand }}</p>
       <h3 class="text-lg font-bold text-primary mb-2 group-hover:text-accent transition-colors">{{ product.name }}</h3>
       <div class="flex items-center justify-center gap-3">
-        <span class="text-primary font-black">{{ product.price }}</span>
+        <span class="text-primary font-black">{{ product.price.toLocaleString('vi-VN') }}₫</span>
         @if (product.oldPrice) {
-          <span class="text-slate-300 line-through text-sm">{{ product.oldPrice }}</span>
+          <span class="text-slate-300 line-through text-sm">{{ product.oldPrice.toLocaleString('vi-VN') }}₫</span>
         }
       </div>
     </div>
   }
 
-  <!-- Square dùng cho trang home -->
+  <!-- Square -->
   @if (variant === 'square') {
     <div class="relative aspect-square rounded-xl overflow-hidden bg-white mb-6">
       <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
         [src]="product.img" [alt]="product.name"/>
+      <!-- Favorite btn -->
+      <button (click)="toggleFavorite($event)"
+        class="absolute top-4 right-4 w-9 h-9 rounded-full flex items-center justify-center transition-all shadow"
+        [class]="isFav ? 'bg-red-500 text-white' : 'bg-white/80 text-slate-400 hover:text-red-500'">
+        {{ isFav ? '♥' : '♡' }}
+      </button>
       @if (product.badge) {
-        <div class="absolute top-4 right-4">
+        <div class="absolute top-4 left-4">
           <span class="bg-accent text-white px-3 py-1 text-[10px] font-bold uppercase tracking-widest rounded-full">
             {{ product.badge }}
           </span>
         </div>
       }
       <div class="absolute inset-x-0 bottom-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform bg-white/80 backdrop-blur-sm">
-        <button class="w-full bg-primary text-white py-3 font-bold text-sm uppercase tracking-widest rounded-lg">
-          Thêm Vào Giỏ
+        <button (click)="addToCart($event)"
+          class="w-full bg-primary text-white py-3 font-bold text-sm uppercase tracking-widest rounded-lg">
+          🛒 Thêm Vào Giỏ
         </button>
       </div>
     </div>
     <div class="flex flex-col items-center text-center">
       <p class="text-xs text-primary/40 uppercase font-bold tracking-widest mb-1">{{ product.brand }}</p>
       <h4 class="text-lg font-bold mb-2">{{ product.name }}</h4>
-      <p class="text-accent font-bold">{{ product.price }}</p>
+      <p class="text-accent font-bold">{{ product.price.toLocaleString('vi-VN') }}₫</p>
     </div>
   }
 
-</div>
+</a>
