@@ -21,6 +21,8 @@ export interface Product {
   reviews: number;
   sold: number;
   category?: string;
+  hidden?: boolean;
+  status?: 'active' | 'hidden' | 'out_of_stock';
 }
 
 @Component({

@@ -1,39 +1,151 @@
 <div class="flex min-h-screen bg-slate-50">
   <app-admin-sidebar />
+
   <main class="flex-1 p-8">
+    <!-- Header -->
     <div class="flex justify-between items-center mb-8">
-      <h2 class="text-2xl font-black text-slate-800" style="font-family: Georgia, serif">Quản lý sản phẩm</h2>
-      <button class="bg-accent text-primary font-bold px-6 py-3 rounded-xl text-sm uppercase tracking-widest hover:bg-accent/90 transition-colors">
-        + Thêm sản phẩm
-      </button>
+      <div>
+        <h2 class="text-2xl font-black text-slate-800">Quản lý sản phẩm</h2>
+        <p class="text-slate-400 text-sm mt-1">{{ adminService.products().length }} sản phẩm</p>
+      </div>
+      <div class="flex gap-3 items-center">
+        @if (saved()) {
+          <span class="px-4 py-2 bg-green-100 text-green-700 rounded-xl text-sm font-bold">✓ Đã lưu</span>
+        }
+        <button (click)="openAdd()"
+          class="bg-accent text-primary font-bold px-6 py-3 rounded-xl text-sm uppercase tracking-widest hover:bg-accent/90 transition-colors flex items-center gap-2">
+          + Thêm sản phẩm
+        </button>
+      </div>
     </div>
 
+    <!-- Form thêm/sửa -->
+    @if (showForm()) {
+      <div class="bg-white rounded-2xl border border-slate-100 shadow-sm p-8 mb-8">
+        <h3 class="text-lg font-black text-slate-800 mb-6">
+          {{ editingId() ? 'Sửa sản phẩm' : 'Thêm sản phẩm mới' }}
+        </h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <div>
+            <label class="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Tên sản phẩm *</label>
+            <input [(ngModel)]="form.name" placeholder="Tên sản phẩm"
+              class="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-primary"/>
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Thương hiệu *</label>
+            <input [(ngModel)]="form.brand" placeholder="Brand"
+              class="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-primary"/>
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Giá (₫) *</label>
+            <input [(ngModel)]="form.price" type="number" placeholder="0"
+              class="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-primary"/>
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Giá gốc (₫)</label>
+            <input [(ngModel)]="form.oldPrice" type="number" placeholder="Để trống nếu không giảm giá"
+              class="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-primary"/>
+          </div>
+          <div class="md:col-span-2">
+            <label class="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">URL ảnh *</label>
+            <input [(ngModel)]="form.img" placeholder="https://..."
+              class="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-primary"/>
+          </div>
+          <div class="md:col-span-2">
+            <label class="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Mô tả</label>
+            <textarea [(ngModel)]="form.description" rows="3" placeholder="Mô tả sản phẩm..."
+              class="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-primary resize-none"></textarea>
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Nhóm hương</label>
+            <select [(ngModel)]="form.category"
+              class="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-primary">
+              <option value="floral">Hoa cỏ (Floral)</option>
+              <option value="woody">Gỗ (Woody)</option>
+              <option value="oriental">Phương Đông (Oriental)</option>
+              <option value="citrus">Cam chanh (Citrus)</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Badge</label>
+            <input [(ngModel)]="form.badge" placeholder="Mới / Bán Chạy / Sale..."
+              class="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-primary"/>
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Độ lưu hương (1-5)</label>
+            <input [(ngModel)]="form.longevity" type="number" min="1" max="5"
+              class="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-primary"/>
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Độ tỏa hương (1-5)</label>
+            <input [(ngModel)]="form.sillage" type="number" min="1" max="5"
+              class="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-primary"/>
+          </div>
+        </div>
+        <div class="flex gap-3 mt-6">
+          <button (click)="save()"
+            class="bg-primary text-white px-8 py-3 rounded-xl font-bold text-sm uppercase tracking-widest hover:bg-primary/90 transition-colors">
+            {{ editingId() ? 'Cập nhật' : 'Thêm mới' }}
+          </button>
+          <button (click)="cancel()"
+            class="border border-slate-200 px-8 py-3 rounded-xl font-bold text-sm text-slate-500 hover:bg-slate-50 transition-colors">
+            Hủy
+          </button>
+        </div>
+      </div>
+    }
+
+    <!-- Product table -->
     <div class="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
       <table class="w-full">
         <thead class="bg-slate-50">
           <tr>
-            @for (h of ['Sản phẩm', 'Thương hiệu', 'Giá', 'Đã bán', 'Đánh giá', 'Thao tác']; track h) {
+            @for (h of ['Sản phẩm', 'Thương hiệu', 'Giá', 'Đã bán', 'Trạng thái', 'Thao tác']; track h) {
               <th class="px-6 py-3 text-left text-xs font-bold text-slate-400 uppercase tracking-widest">{{ h }}</th>
             }
           </tr>
         </thead>
         <tbody>
-          @for (p of items; track p.id) {
-            <tr class="border-t border-slate-50 hover:bg-slate-50 transition-colors">
+          @for (p of adminService.products(); track p.id) {
+            <tr class="border-t border-slate-50 transition-colors" [class]="p.status === 'hidden' ? 'bg-slate-50 opacity-60' : 'hover:bg-slate-50'">
               <td class="px-6 py-4">
                 <div class="flex items-center gap-3">
-                  <img [src]="p.img" class="w-12 h-12 rounded-xl object-cover"/>
-                  <span class="font-semibold text-slate-800 text-sm">{{ p.name }}</span>
+                  <img [src]="p.img" class="w-12 h-12 rounded-xl object-cover flex-shrink-0"/>
+                  <div>
+                    <span class="font-semibold text-slate-800 text-sm block">{{ p.name }}</span>
+                    @if (p.badge) {
+                      <span class="text-xs bg-accent/20 text-accent px-2 py-0.5 rounded-full font-bold">{{ p.badge }}</span>
+                    }
+                  </div>
                 </div>
               </td>
               <td class="px-6 py-4 text-sm text-slate-500">{{ p.brand }}</td>
               <td class="px-6 py-4 text-sm font-bold text-primary">{{ p.price.toLocaleString('vi-VN') }}₫</td>
               <td class="px-6 py-4 text-sm text-slate-500">{{ p.sold.toLocaleString() }}</td>
-              <td class="px-6 py-4 text-sm text-accent font-bold">★ {{ p.rating }}</td>
+              <td class="px-6 py-4">
+                @if (p.status === 'hidden') {
+                  <span class="px-3 py-1 rounded-full text-xs font-bold bg-slate-200 text-slate-500">Đã ẩn</span>
+                } @else if (p.status === 'out_of_stock') {
+                  <span class="px-3 py-1 rounded-full text-xs font-bold bg-red-100 text-red-600">Hết hàng</span>
+                } @else {
+                  <span class="px-3 py-1 rounded-full text-xs font-bold bg-green-100 text-green-700">Hiển thị</span>
+                }
+              </td>
               <td class="px-6 py-4">
                 <div class="flex gap-2">
-                  <a [routerLink]="['/product', p.id]" class="text-xs px-3 py-1 rounded-lg bg-primary/10 text-primary font-bold hover:bg-primary/20 transition-colors">Xem</a>
-                  <button class="text-xs px-3 py-1 rounded-lg bg-red-50 text-red-500 font-bold hover:bg-red-100 transition-colors">Xóa</button>
+                  <button (click)="openEdit(p)"
+                    class="text-xs px-3 py-1.5 rounded-lg bg-primary/10 text-primary font-bold hover:bg-primary/20 transition-colors">
+                    ✏️ Sửa
+                  </button>
+                  <button (click)="toggleHidden(p.id)"
+                    class="text-xs px-3 py-1.5 rounded-lg font-bold transition-colors"
+                    [class]="p.status === 'hidden' ? 'bg-green-50 text-green-600 hover:bg-green-100' : 'bg-slate-100 text-slate-500 hover:bg-slate-200'">
+                    {{ p.status === 'hidden' ? '👁️ Hiện' : '🙈 Ẩn' }}
+                  </button>
+                  <button (click)="delete(p.id)"
+                    class="text-xs px-3 py-1.5 rounded-lg bg-red-50 text-red-500 font-bold hover:bg-red-100 transition-colors">
+                    🗑️ Xóa
+                  </button>
                 </div>
               </td>
             </tr>

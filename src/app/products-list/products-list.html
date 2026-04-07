@@ -41,27 +41,20 @@
             <p class="text-sm font-semibold mb-4 text-slate-800">Khoảng giá (VNĐ)</p>
             <div class="space-y-3">
               <label class="flex items-center gap-3 cursor-pointer group">
-                <input class="rounded border-primary/20 text-primary focus:ring-primary h-4 w-4" type="checkbox"/>
+                <input type="checkbox" [checked]="isPriceSelected('under1m')" (change)="togglePrice('under1m')"
+                  class="rounded border-primary/20 text-primary focus:ring-primary h-4 w-4"/>
                 <span class="text-sm text-slate-600 group-hover:text-primary transition-colors">Dưới 1.000.000</span>
               </label>
               <label class="flex items-center gap-3 cursor-pointer group">
-                <input class="rounded border-primary/20 text-primary focus:ring-primary h-4 w-4" type="checkbox"/>
+                <input type="checkbox" [checked]="isPriceSelected('1m-3m')" (change)="togglePrice('1m-3m')"
+                  class="rounded border-primary/20 text-primary focus:ring-primary h-4 w-4"/>
                 <span class="text-sm text-slate-600 group-hover:text-primary transition-colors">1.000.000 - 3.000.000</span>
               </label>
               <label class="flex items-center gap-3 cursor-pointer group">
-                <input class="rounded border-primary/20 text-primary focus:ring-primary h-4 w-4" type="checkbox"/>
+                <input type="checkbox" [checked]="isPriceSelected('over3m')" (change)="togglePrice('over3m')"
+                  class="rounded border-primary/20 text-primary focus:ring-primary h-4 w-4"/>
                 <span class="text-sm text-slate-600 group-hover:text-primary transition-colors">Trên 3.000.000</span>
               </label>
-            </div>
-          </div>
-
-          <!-- Gender -->
-          <div class="mb-8">
-            <p class="text-sm font-semibold mb-4 text-slate-800">Giới tính</p>
-            <div class="flex flex-wrap gap-2">
-              <button class="px-4 py-2 rounded-lg border border-primary/10 text-xs font-bold hover:bg-primary hover:text-white transition-all">NAM</button>
-              <button class="px-4 py-2 rounded-lg border border-primary/10 text-xs font-bold bg-primary text-white">NỮ</button>
-              <button class="px-4 py-2 rounded-lg border border-primary/10 text-xs font-bold hover:bg-primary hover:text-white transition-all">UNISEX</button>
             </div>
           </div>
 
@@ -69,40 +62,26 @@
           <div class="mb-8">
             <p class="text-sm font-semibold mb-4 text-slate-800">Nhóm hương</p>
             <div class="grid grid-cols-1 gap-2">
-              <label class="flex items-center justify-between p-3 rounded-xl border border-primary/5 hover:border-accent transition-colors cursor-pointer group">
-                <div class="flex items-center gap-3">
-                  <span class="material-symbols-outlined text-slate-400 group-hover:text-accent">local_florist</span>
-                  <span class="text-sm text-slate-600">Hương hoa cỏ</span>
-                </div>
-                <span class="text-[10px] font-bold text-slate-300">24</span>
-              </label>
-              <label class="flex items-center justify-between p-3 rounded-xl border border-primary/5 hover:border-accent transition-colors cursor-pointer group">
-                <div class="flex items-center gap-3">
-                  <span class="material-symbols-outlined text-slate-400 group-hover:text-accent">forest</span>
-                  <span class="text-sm text-slate-600">Hương gỗ</span>
-                </div>
-                <span class="text-[10px] font-bold text-slate-300">18</span>
-              </label>
-              <label class="flex items-center justify-between p-3 rounded-xl border border-primary/5 hover:border-accent transition-colors cursor-pointer group">
-                <div class="flex items-center gap-3">
-                  <span class="material-symbols-outlined text-slate-400 group-hover:text-accent">bakery_dining</span>
-                  <span class="text-sm text-slate-600">Hương gia vị</span>
-                </div>
-                <span class="text-[10px] font-bold text-slate-300">12</span>
-              </label>
+              @for (cat of [['floral','🌸','Hương hoa cỏ'],['woody','🌲','Hương gỗ'],['oriental','🌙','Hương phương Đông'],['citrus','🍋','Hương cam chanh']]; track cat[0]) {
+                <label (click)="toggleCategory(cat[0])"
+                  class="flex items-center gap-3 p-3 rounded-xl border cursor-pointer transition-all"
+                  [class]="isCatSelected(cat[0]) ? 'border-accent bg-accent/5 text-primary' : 'border-primary/5 hover:border-accent/40 text-slate-600'">
+                  <span class="text-lg">{{ cat[1] }}</span>
+                  <span class="text-sm font-medium">{{ cat[2] }}</span>
+                  @if (isCatSelected(cat[0])) {
+                    <span class="ml-auto text-accent text-xs font-bold">✓</span>
+                  }
+                </label>
+              }
             </div>
           </div>
 
-          <!-- Longevity -->
-          <div class="mb-8">
-            <p class="text-sm font-semibold mb-4 text-slate-800">Độ lưu hương</p>
-            <select class="w-full bg-white border-primary/10 rounded-xl text-sm focus:ring-primary focus:border-primary">
-              <option>Tất cả</option>
-              <option>Lâu (7-12 giờ)</option>
-              <option>Rất lâu (Trên 12 giờ)</option>
-              <option>Trung bình (3-6 giờ)</option>
-            </select>
-          </div>
+          @if (hasFilters) {
+            <button (click)="clearFilters()"
+              class="w-full py-2 text-sm text-red-400 hover:text-red-600 border border-red-200 rounded-xl hover:bg-red-50 transition-colors font-semibold">
+              ✕ Xóa bộ lọc
+            </button>
+          }
         </div>
       </div>
     </aside>
@@ -129,11 +108,12 @@
             }
           </div>
           <span class="text-sm text-slate-400">Sắp xếp:</span>
-          <select class="bg-transparent border-none text-sm font-bold text-primary focus:ring-0 cursor-pointer">
-            <option>Mới nhất</option>
-            <option>Giá: Thấp đến Cao</option>
-            <option>Giá: Cao đến Thấp</option>
-            <option>Phổ biến nhất</option>
+          <select [(ngModel)]="sortBy" class="bg-transparent border-none text-sm font-bold text-primary focus:ring-0 cursor-pointer">
+            <option value="newest">Mới nhất</option>
+            <option value="price-asc">Giá: Thấp đến Cao</option>
+            <option value="price-desc">Giá: Cao đến Thấp</option>
+            <option value="popular">Phổ biến nhất</option>
+            <option value="rating">Đánh giá cao nhất</option>
           </select>
         </div>
       </div>

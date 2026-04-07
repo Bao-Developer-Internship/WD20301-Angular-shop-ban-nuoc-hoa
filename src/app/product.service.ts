@@ -1,21 +1,23 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { Product } from './product-item/product-item';
-import { PRODUCTS, COLLECTIONS } from './data/products.data';
+import { COLLECTIONS } from './data/products.data';
+import { AdminProductService } from './admin/admin-product.service';
 
 @Injectable({ providedIn: 'root' })
 export class ProductService {
+  private adminService = inject(AdminProductService);
 
   getAll(): Observable<Product[]> {
-    return of(PRODUCTS);
+    return of(this.adminService.getVisible());
   }
 
   getBestSellers(limit = 4): Observable<Product[]> {
-    return of(PRODUCTS.slice(0, limit));
+    return of(this.adminService.getVisible().slice(0, limit));
   }
 
   getById(id: string): Observable<Product | null> {
-    return of(PRODUCTS.find(p => p.id === id) ?? null);
+    return of(this.adminService.products().find(p => p.id === id) ?? null);
   }
 
   getCollections(): Observable<any[]> {
