@@ -1,18 +1,60 @@
-import { Component, inject, signal } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { Component, inject, signal, OnInit } from '@angular/core';
+import { Router, RouterLink, ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { DatePipe } from '@angular/common';
 import { AuthService } from '../auth.service';
+import { NotificationService } from '../notification.service';
 
 @Component({
   selector: 'app-profile',
-  imports: [RouterLink, FormsModule],
+  imports: [RouterLink, FormsModule, DatePipe],
   templateUrl: './profile.html',
 })
-export class Profile {
+export class Profile implements OnInit {
   auth = inject(AuthService);
+  notifService = inject(NotificationService);
   private router = inject(Router);
+  private route = inject(ActivatedRoute);
 
-  activeTab = signal<'profile' | 'orders' | 'password'>('profile');
+  activeTab = signal<'profile' | 'orders' | 'password' | 'notifications'>('profile');
+
+  ngOnInit() {
+    this.route.queryParams.subscribe(params => {
+      if (params['tab']) this.activeTab.set(params['tab']);
+    });
+  }
+
+  get notifications() {
+    const email = this.auth.user()?.email;
+    return email ? this.notifService.getForEmail(email) : [];
+  }
+
+  get unreadCount() {
+    const email = this.auth.user()?.email;
+    return email ? this.notifService.unreadCount(email) : 0;
+  }
+
+  markAllRead() {
+    const email = this.auth.user()?.email;
+    if (email) this.notifService.markAllRead(email);
+  }
+
+  notifIcon(type: string) {
+    const map: Record<string, string> = {
+      confirmed: '✅', delivering: '🚚', completed: '🎉', cancelled: '❌'
+    };
+    return map[type] || '📢';
+  }
+
+  notifClass(type: string) {
+    const map: Record<string, string> = {
+      confirmed: 'border-green-200 bg-green-50',
+      delivering: 'border-blue-200 bg-blue-50',
+      completed: 'border-green-200 bg-green-50',
+      cancelled: 'border-red-200 bg-red-50',
+    };
+    return map[type] || 'border-slate-200 bg-white';
+  }
 
   form = {
     name: this.auth.user()?.name || '',

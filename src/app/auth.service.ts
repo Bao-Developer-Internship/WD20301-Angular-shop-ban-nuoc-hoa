@@ -1,4 +1,5 @@
-import { Injectable, signal, computed } from '@angular/core';
+import { Injectable, signal, computed, PLATFORM_ID, inject } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 
 export interface User {
   name: string;
@@ -29,7 +30,11 @@ export class AuthService {
     return name.split(' ').map(w => w[0]).slice(-2).join('').toUpperCase() || '?';
   });
 
+  private platformId = inject(PLATFORM_ID);
+  private isBrowser = isPlatformBrowser(this.platformId);
+
   constructor() {
+    if (!this.isBrowser) return;
     // Clear old keys từ version cũ
     if (localStorage.getItem('admin_token') && !localStorage.getItem('luxe_user')) {
       localStorage.removeItem('admin_token');
@@ -43,23 +48,27 @@ export class AuthService {
 
   login(user: User) {
     this._user.set(user);
-    localStorage.setItem('luxe_user', JSON.stringify(user));
-    if (user.role === 'admin') {
-      localStorage.setItem('admin_token', 'mock_admin_token');
-      localStorage.setItem('admin_user', JSON.stringify(user));
+    if (this.isBrowser) {
+      localStorage.setItem('luxe_user', JSON.stringify(user));
+      if (user.role === 'admin') {
+        localStorage.setItem('admin_token', 'mock_admin_token');
+        localStorage.setItem('admin_user', JSON.stringify(user));
+      }
     }
   }
 
   updateUser(data: Partial<User>) {
     const updated = { ...this._user()!, ...data };
     this._user.set(updated);
-    localStorage.setItem('luxe_user', JSON.stringify(updated));
+    if (this.isBrowser) localStorage.setItem('luxe_user', JSON.stringify(updated));
   }
 
   logout() {
     this._user.set(null);
-    localStorage.removeItem('luxe_user');
-    localStorage.removeItem('admin_token');
-    localStorage.removeItem('admin_user');
+    if (this.isBrowser) {
+      localStorage.removeItem('luxe_user');
+      localStorage.removeItem('admin_token');
+      localStorage.removeItem('admin_user');
+    }
   }
 }

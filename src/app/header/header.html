@@ -43,6 +43,12 @@
                 <p class="text-xs text-slate-400 truncate">{{ auth.user()?.email }}</p>
               </div>
               <a routerLink="/profile" class="flex items-center gap-3 px-4 py-2 text-sm text-slate-600 hover:bg-primary/5 hover:text-primary transition-colors">👤 Tài khoản</a>
+              <a routerLink="/profile" [queryParams]="{tab:'notifications'}" class="flex items-center justify-between px-4 py-2 text-sm text-slate-600 hover:bg-primary/5 hover:text-primary transition-colors">
+                <span>🔔 Thông báo</span>
+                @if (unreadCount > 0) {
+                  <span class="bg-red-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">{{ unreadCount }}</span>
+                }
+              </a>
               <a routerLink="/favorite" class="flex items-center gap-3 px-4 py-2 text-sm text-slate-600 hover:bg-primary/5 hover:text-primary transition-colors">♥ Yêu thích</a>
               @if (auth.isAdmin()) {
                 <a routerLink="/admin/dashboard" class="flex items-center gap-3 px-4 py-2 text-sm text-accent font-bold hover:bg-accent/5 transition-colors">⚙️ Quản trị</a>

@@ -2,9 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
+/* CSS Variables cho theme động */
+:root {
+  --color-primary: #0a3d2b;
+  --color-accent: #c5a059;
+  --color-background: #f8f4f0;
+}
+
 /* Font fallback toàn cục */
 body {
   font-family: 'Inter', sans-serif;
+  background-color: var(--color-background);
 }
 
 /* Angular components as block elements */

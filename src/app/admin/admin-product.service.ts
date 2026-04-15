@@ -13,7 +13,17 @@ export class AdminProductService {
   private load(): Product[] {
     try {
       const stored = localStorage.getItem(STORAGE_KEY);
-      return stored ? JSON.parse(stored) : PRODUCTS;
+      if (stored) {
+        const parsed: Product[] = JSON.parse(stored);
+        // Migration: nếu ảnh không dùng /assets/ thì reset về default
+        const needsMigration = parsed.some(p => !p.img.startsWith('/assets/'));
+        if (needsMigration) {
+          localStorage.removeItem(STORAGE_KEY);
+          return PRODUCTS;
+        }
+        return parsed;
+      }
+      return PRODUCTS;
     } catch { return PRODUCTS; }
   }
 

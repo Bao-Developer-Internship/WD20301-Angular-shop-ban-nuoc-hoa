@@ -18,6 +18,8 @@ import { Contact } from './contact/contact';
 import { Profile } from './profile/profile';
 import { CollectionDetail } from './collection-detail/collection-detail';
 import { AdminGallery } from './admin/gallery/admin-gallery';
+import { AdminCollections } from './admin/collections/admin-collections';
+import { AdminStaff } from './admin/staff/admin-staff';
 
 export const routes: Routes = [
   { path: '', component: Home },
@@ -39,6 +41,8 @@ export const routes: Routes = [
   { path: 'admin/customers', component: AdminCustomers },
   { path: 'admin/settings', component: AdminSettings },
   { path: 'admin/gallery', component: AdminGallery },
+  { path: 'admin/collections', component: AdminCollections },
+  { path: 'admin/staff', component: AdminStaff },
   { path: 'admin', redirectTo: 'admin/dashboard', pathMatch: 'full' },
   { path: '**', redirectTo: '', pathMatch: 'full' },
 ];

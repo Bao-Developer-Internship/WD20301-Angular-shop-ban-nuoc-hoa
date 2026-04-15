@@ -1,0 +1,190 @@
+<div class="flex min-h-screen bg-slate-50">
+  <app-admin-sidebar />
+  <main class="flex-1 p-8">
+
+    <!-- Header -->
+    <div class="flex justify-between items-center mb-8">
+      <div>
+        <h2 class="text-2xl font-black text-slate-800">Quản lý Bộ sưu tập</h2>
+        <p class="text-slate-400 text-sm mt-1">Điều chỉnh sản phẩm và trạng thái theo từng mùa</p>
+      </div>
+      @if (saved()) {
+        <span class="px-4 py-2 bg-green-100 text-green-700 rounded-xl text-sm font-bold">✓ Đã lưu thành công</span>
+      }
+    </div>
+
+    <!-- Tabs -->
+    <div class="flex gap-3 mb-8 overflow-x-auto pb-1">
+      @for (tab of tabs; track tab[0]) {
+        <button (click)="setTab(tab[0])"
+          class="flex items-center gap-2 px-6 py-3 rounded-xl font-bold text-sm whitespace-nowrap transition-all"
+          [class]="activeTab() === tab[0] ? 'bg-accent text-primary shadow-md' : 'bg-white border border-slate-200 text-slate-500 hover:border-accent/40'">
+          <span>{{ tab[1].icon }}</span>
+          {{ tab[1].label }}
+        </button>
+      }
+    </div>
+
+    <!-- Collection card -->
+    <div class="bg-white rounded-2xl border border-slate-100 shadow-sm p-8 mb-8">
+      <div class="flex justify-between items-start mb-8 pb-6 border-b border-slate-100 flex-wrap gap-4">
+        <div class="flex gap-6 items-start">
+          <img [src]="season.img" class="w-20 h-20 rounded-xl object-cover shadow-sm flex-shrink-0"/>
+          <div>
+            <div class="flex items-center gap-3 mb-2">
+              <h3 class="text-xl font-black text-primary">{{ season.title }}</h3>
+              <button (click)="toggleStatus()"
+                class="text-xs font-bold px-3 py-1 rounded-full border transition-all"
+                [class]="season.status === 'Đang hiển thị' ? 'bg-green-100 text-green-700 border-green-200' : 'bg-yellow-100 text-yellow-700 border-yellow-200'">
+                {{ season.status }}
+              </button>
+            </div>
+            @if (!editingDesc()) {
+              <div class="flex items-start gap-2">
+                <p class="text-slate-500 text-sm max-w-lg leading-relaxed">{{ season.desc }}</p>
+                <button (click)="startEditDesc()" class="text-slate-300 hover:text-primary transition-colors text-sm flex-shrink-0">✏️</button>
+              </div>
+            } @else {
+              <div class="flex flex-col gap-2 max-w-lg">
+                <textarea [(ngModel)]="descDraft" rows="3"
+                  class="w-full border border-accent/40 rounded-xl px-3 py-2 text-sm focus:outline-none resize-none"></textarea>
+                <div class="flex gap-2">
+                  <button (click)="saveDesc()" class="px-4 py-1.5 bg-primary text-white rounded-lg text-xs font-bold">Lưu</button>
+                  <button (click)="editingDesc.set(false)" class="px-4 py-1.5 bg-slate-100 text-slate-500 rounded-lg text-xs">Hủy</button>
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+        <button (click)="openAddModal()"
+          class="flex items-center gap-2 px-5 py-2.5 bg-primary text-white rounded-xl font-bold text-sm hover:bg-primary/90 transition-colors">
+          + Thêm sản phẩm
+        </button>
+      </div>
+
+      <!-- Products grid -->
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5">
+        @for (p of season.products; track $index) {
+          <div class="group relative bg-slate-50 rounded-xl border-2 border-dashed border-slate-200 hover:border-accent/40 p-4 transition-all">
+            <div class="aspect-square rounded-lg overflow-hidden mb-3 bg-white">
+              <img [src]="p.img" [alt]="p.name" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"/>
+            </div>
+            @if (p.badge) {
+              <span class="text-[10px] font-bold bg-accent/20 text-accent px-2 py-0.5 rounded">{{ p.badge }}</span>
+            }
+            <p class="text-xs text-slate-400 mt-1">{{ p.brand }}</p>
+            <p class="font-bold text-slate-800 text-sm truncate">{{ p.name }}</p>
+            <button (click)="confirmDeleteProduct($index, p.name)"
+              class="absolute top-2 right-2 text-slate-300 hover:text-red-500 transition-colors text-sm opacity-0 group-hover:opacity-100">✕</button>
+          </div>
+        }
+        <!-- Add placeholder -->
+        <button (click)="openAddModal()"
+          class="aspect-square rounded-xl border-2 border-dashed border-slate-200 hover:border-accent/40 flex flex-col items-center justify-center gap-2 text-slate-400 hover:text-primary transition-all min-h-40">
+          <span class="text-3xl">+</span>
+          <span class="text-xs font-semibold">Thêm mới</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-5">
+      @for (s of season.stats; track s.label) {
+        <div class="bg-white rounded-2xl border border-slate-100 shadow-sm p-5 flex items-center gap-4">
+          <div class="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-xl flex-shrink-0">📊</div>
+          <div>
+            <p class="text-xs font-bold text-slate-400 uppercase tracking-widest">{{ s.label }}</p>
+            <p class="text-xl font-black text-primary">{{ s.value }}</p>
+          </div>
+        </div>
+      }
+    </div>
+
+  </main>
+</div>
+
+<!-- Floating save bar -->
+@if (changes().length > 0) {
+  <div class="fixed bottom-8 right-8 bg-primary/95 backdrop-blur rounded-2xl shadow-2xl flex items-center gap-4 p-2 z-50">
+    <div class="px-4">
+      <p class="text-[10px] font-bold text-accent uppercase tracking-widest">Đang chỉnh sửa</p>
+      <p class="text-white text-sm font-semibold">{{ changes().length }} thay đổi chưa lưu</p>
+    </div>
+    <button (click)="showModal.set(true)"
+      class="bg-accent text-primary font-black px-6 py-3 rounded-xl text-sm uppercase tracking-widest hover:bg-accent/90 transition-colors">
+      Lưu thay đổi
+    </button>
+  </div>
+}
+
+<!-- Save confirm modal -->
+@if (showModal()) {
+  <div class="fixed inset-0 z-50 flex items-center justify-center">
+    <div class="absolute inset-0 bg-black/40 backdrop-blur-sm" (click)="showModal.set(false)"></div>
+    <div class="relative bg-white rounded-2xl p-8 w-full max-w-md shadow-2xl mx-4">
+      <h3 class="text-lg font-black text-slate-800 mb-2">Xác nhận lưu thay đổi</h3>
+      <p class="text-slate-400 text-sm mb-6">{{ changes().length }} thay đổi sẽ được lưu:</p>
+      <div class="space-y-2 mb-6 max-h-48 overflow-y-auto">
+        @for (c of changes(); track c.field) {
+          <div class="bg-slate-50 rounded-xl p-3 text-xs">
+            <p class="font-bold text-slate-700">{{ c.field }}</p>
+            <p class="text-slate-400 mt-1">{{ c.oldValue }} → <span class="text-primary font-semibold">{{ c.newValue }}</span></p>
+          </div>
+        }
+      </div>
+      <div class="flex gap-3">
+        <button (click)="showModal.set(false)" class="flex-1 py-3 border border-slate-200 rounded-xl text-sm font-bold text-slate-500 hover:bg-slate-50">Hủy</button>
+        <button (click)="saveAll()" [disabled]="saving()"
+          class="flex-1 py-3 bg-primary text-white rounded-xl text-sm font-bold uppercase tracking-widest hover:bg-primary/90 disabled:opacity-50">
+          {{ saving() ? 'Đang lưu...' : 'Xác nhận lưu' }}
+        </button>
+      </div>
+    </div>
+  </div>
+}
+
+<!-- Product picker modal -->
+@if (showProductPicker()) {
+  <div class="fixed inset-0 z-50 flex items-center justify-center">
+    <div class="absolute inset-0 bg-black/40 backdrop-blur-sm" (click)="showProductPicker.set(false)"></div>
+    <div class="relative bg-white rounded-2xl p-8 w-full max-w-2xl shadow-2xl mx-4 max-h-[85vh] overflow-y-auto">
+      <h3 class="text-lg font-black text-slate-800 mb-1">Chọn sản phẩm</h3>
+      <p class="text-slate-400 text-sm mb-6">Thêm vào bộ sưu tập {{ season.label }}</p>
+      <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+        @for (p of availableProducts; track p.id) {
+          <button (click)="addProductFromList(p)" type="button"
+            class="group text-left rounded-xl border-2 p-3 transition-all hover:border-accent/40 hover:bg-accent/5"
+            [class]="season.products.find(sp => sp.id === p.id) ? 'border-accent/30 bg-accent/5 opacity-50 cursor-not-allowed' : 'border-slate-200'">
+            <div class="aspect-square rounded-lg overflow-hidden mb-2 bg-slate-50">
+              <img [src]="p.img" [alt]="p.name" class="w-full h-full object-cover"/>
+            </div>
+            <p class="text-xs text-slate-400">{{ p.brand }}</p>
+            <p class="font-bold text-slate-800 text-sm truncate">{{ p.name }}</p>
+            @if (season.products.find(sp => sp.id === p.id)) {
+              <span class="text-[10px] text-accent font-bold">✓ Đã thêm</span>
+            }
+          </button>
+        }
+      </div>
+      <button (click)="showProductPicker.set(false)" class="mt-6 w-full py-3 border border-slate-200 rounded-xl text-sm font-bold text-slate-500 hover:bg-slate-50">
+        Đóng
+      </button>
+    </div>
+  </div>
+}
+
+<!-- Delete confirm modal -->
+@if (deleteConfirm()) {
+  <div class="fixed inset-0 z-50 flex items-center justify-center">
+    <div class="absolute inset-0 bg-black/40 backdrop-blur-sm" (click)="deleteConfirm.set(null)"></div>
+    <div class="relative bg-white rounded-2xl p-8 w-full max-w-sm shadow-2xl mx-4 text-center">
+      <div class="w-14 h-14 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl">🗑️</div>
+      <h3 class="text-lg font-black text-slate-800 mb-2">Xóa sản phẩm?</h3>
+      <p class="text-slate-400 text-sm mb-6">Bạn có chắc muốn xóa <strong>{{ deleteConfirm()?.name }}</strong> khỏi bộ sưu tập {{ season.label }}?</p>
+      <div class="flex gap-3">
+        <button (click)="deleteConfirm.set(null)" class="flex-1 py-3 border border-slate-200 rounded-xl text-sm font-bold text-slate-500">Hủy</button>
+        <button (click)="doDelete()" class="flex-1 py-3 bg-red-500 text-white rounded-xl text-sm font-bold">Xóa</button>
+      </div>
+    </div>
+  </div>
+}

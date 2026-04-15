@@ -14,6 +14,7 @@ export class AdminSidebar {
     { href: '/admin/products', icon: '📦', label: 'Sản phẩm' },
     { href: '/admin/collections', icon: '✨', label: 'Bộ sưu tập' },
     { href: '/admin/gallery', icon: '🖼️', label: 'Ảnh trang chủ' },
+    { href: '/admin/staff', icon: '👨‍💼', label: 'Nhân viên' },
     { href: '/admin/settings', icon: '⚙️', label: 'Cài đặt' },
   ];
 }

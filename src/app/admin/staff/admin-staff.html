@@ -1,0 +1,143 @@
+<div class="flex min-h-screen bg-slate-50">
+  <app-admin-sidebar />
+  <main class="flex-1 p-8">
+
+    <div class="flex justify-between items-center mb-8">
+      <div>
+        <h2 class="text-2xl font-black text-slate-800">Quản lý nhân viên & Phân quyền</h2>
+        <p class="text-slate-400 text-sm mt-1">Thêm nhân viên và cấu hình quyền truy cập từng chức năng</p>
+      </div>
+      <div class="flex gap-3 items-center">
+        @if (saved()) {
+          <span class="px-4 py-2 bg-green-100 text-green-700 rounded-xl text-sm font-bold">✓ Đã lưu</span>
+        }
+        <button (click)="showAddModal.set(true)"
+          class="bg-primary text-white font-bold px-5 py-2.5 rounded-xl text-sm hover:bg-primary/90 transition-colors">
+          + Thêm nhân viên
+        </button>
+      </div>
+    </div>
+
+    <!-- Staff list -->
+    <div class="space-y-4">
+      @for (member of staff(); track member.id) {
+        <div class="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden"
+          [class]="!member.active ? 'opacity-60' : ''">
+
+          <!-- Header row -->
+          <div class="flex items-center justify-between px-6 py-4 border-b border-slate-50">
+            <div class="flex items-center gap-4">
+              <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center font-black text-primary text-sm">
+                {{ member.name.charAt(0) }}
+              </div>
+              <div>
+                <p class="font-bold text-slate-800">{{ member.name }}</p>
+                <p class="text-xs text-slate-400">{{ member.email }}</p>
+              </div>
+              <span class="px-3 py-1 rounded-full text-xs font-bold" [class]="roleColors[member.role]">
+                {{ roleLabels[member.role] }}
+              </span>
+              @if (!member.active) {
+                <span class="px-2 py-0.5 bg-slate-100 text-slate-400 rounded text-xs font-bold">Đã vô hiệu</span>
+              }
+            </div>
+            <div class="flex gap-2">
+              <button (click)="toggleActive(member.id)"
+                class="text-xs px-3 py-1.5 rounded-lg font-bold transition-colors"
+                [class]="member.active ? 'bg-slate-100 text-slate-500 hover:bg-slate-200' : 'bg-green-50 text-green-600 hover:bg-green-100'">
+                {{ member.active ? '🔒 Vô hiệu hóa' : '✅ Kích hoạt' }}
+              </button>
+              @if (editingId() !== member.id) {
+                <button (click)="startEdit(member.id)"
+                  class="text-xs px-3 py-1.5 rounded-lg bg-primary/10 text-primary font-bold hover:bg-primary/20 transition-colors">
+                  ✏️ Phân quyền
+                </button>
+              } @else {
+                <button (click)="saveEdit()"
+                  class="text-xs px-3 py-1.5 rounded-lg bg-green-500 text-white font-bold hover:bg-green-600 transition-colors">
+                  ✓ Lưu
+                </button>
+              }
+              @if (member.id !== '1') {
+                <button (click)="removeStaff(member.id)"
+                  class="text-xs px-3 py-1.5 rounded-lg bg-red-50 text-red-500 font-bold hover:bg-red-100 transition-colors">
+                  🗑️
+                </button>
+              }
+            </div>
+          </div>
+
+          <!-- Permissions (chỉ hiện khi đang edit) -->
+          @if (editingId() === member.id) {
+            <div class="px-6 py-5 bg-slate-50">
+              <div class="flex items-center gap-4 mb-4">
+                <label class="text-xs font-bold text-slate-500 uppercase tracking-widest">Vai trò:</label>
+                <select [ngModel]="member.role" (ngModelChange)="changeRole(member.id, $event)"
+                  class="border border-slate-200 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:border-primary bg-white">
+                  @for (role of roles; track role) {
+                    <option [value]="role">{{ roleLabels[role] }}</option>
+                  }
+                </select>
+                <span class="text-xs text-slate-400">Chọn vai trò để tự động cập nhật quyền</span>
+              </div>
+              <div class="grid grid-cols-2 lg:grid-cols-3 gap-3">
+                @for (perm of allPermissions; track perm.key) {
+                  <label class="flex items-start gap-3 p-3 rounded-xl border cursor-pointer transition-all"
+                    [class]="hasPermission(member.id, perm.key) ? 'border-primary/30 bg-primary/5' : 'border-slate-200 bg-white hover:border-slate-300'">
+                    <input type="checkbox" [checked]="hasPermission(member.id, perm.key)"
+                      (change)="togglePermission(member.id, perm.key)"
+                      class="mt-0.5 accent-primary flex-shrink-0"/>
+                    <div>
+                      <p class="text-sm font-semibold text-slate-700">{{ perm.label }}</p>
+                      <p class="text-xs text-slate-400">{{ perm.desc }}</p>
+                    </div>
+                  </label>
+                }
+              </div>
+            </div>
+          }
+
+        </div>
+      }
+    </div>
+
+  </main>
+</div>
+
+<!-- Add staff modal -->
+@if (showAddModal()) {
+  <div class="fixed inset-0 z-50 flex items-center justify-center">
+    <div class="absolute inset-0 bg-black/40 backdrop-blur-sm" (click)="showAddModal.set(false)"></div>
+    <div class="relative bg-white rounded-2xl p-8 w-full max-w-md shadow-2xl mx-4">
+      <h3 class="text-lg font-black text-slate-800 mb-6">Thêm nhân viên mới</h3>
+      <div class="flex flex-col gap-4">
+        <div>
+          <label class="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Họ và tên *</label>
+          <input [(ngModel)]="newStaff.name" placeholder="Nguyễn Văn A"
+            class="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-primary"/>
+        </div>
+        <div>
+          <label class="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Email *</label>
+          <input [(ngModel)]="newStaff.email" type="email" placeholder="nhanvien@luxescent.com"
+            class="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-primary"/>
+        </div>
+        <div>
+          <label class="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Vai trò</label>
+          <select [(ngModel)]="newStaff.role"
+            class="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-primary">
+            @for (role of roles; track role) {
+              <option [value]="role">{{ roleLabels[role] }}</option>
+            }
+          </select>
+        </div>
+      </div>
+      <div class="flex gap-3 mt-6">
+        <button (click)="showAddModal.set(false)" class="flex-1 py-3 border border-slate-200 rounded-xl text-sm font-bold text-slate-500">Hủy</button>
+        <button (click)="addStaff()" [disabled]="!newStaff.name || !newStaff.email"
+          class="flex-1 py-3 bg-primary text-white rounded-xl text-sm font-bold disabled:opacity-40 hover:bg-primary/90 transition-colors">
+          Thêm nhân viên
+        </button>
+      </div>
+    </div>
+  </div>
+}
